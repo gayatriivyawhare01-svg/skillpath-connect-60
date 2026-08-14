@@ -15,6 +15,11 @@ import { Route as InternshipPassportRouteImport } from './routes/internship-pass
 import { Route as InternshipXrayRouteImport } from './routes/internship-xray'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ResumeIntelligenceRouteImport } from './routes/resume-intelligence'
+import { Route as StudentCareerAuditRouteImport } from './routes/student.career-audit'
+import { Route as StudentPassportRouteImport } from './routes/student.passport'
+import { Route as StudentProfileRouteImport } from './routes/student.profile'
+import { Route as StudentResumeRouteImport } from './routes/student.resume'
+import { Route as StudentXrayRouteImport } from './routes/student.xray'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +51,31 @@ const ResumeIntelligenceRoute = ResumeIntelligenceRouteImport.update({
   path: '/resume-intelligence',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentCareerAuditRoute = StudentCareerAuditRouteImport.update({
+  id: '/student/career-audit',
+  path: '/student/career-audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentPassportRoute = StudentPassportRouteImport.update({
+  id: '/student/passport',
+  path: '/student/passport',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentProfileRoute = StudentProfileRouteImport.update({
+  id: '/student/profile',
+  path: '/student/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentResumeRoute = StudentResumeRouteImport.update({
+  id: '/student/resume',
+  path: '/student/resume',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentXrayRoute = StudentXrayRouteImport.update({
+  id: '/student/xray',
+  path: '/student/xray',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +84,11 @@ export interface FileRoutesByFullPath {
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
+  '/student/career-audit': typeof StudentCareerAuditRoute
+  '/student/passport': typeof StudentPassportRoute
+  '/student/profile': typeof StudentProfileRoute
+  '/student/resume': typeof StudentResumeRoute
+  '/student/xray': typeof StudentXrayRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +97,11 @@ export interface FileRoutesByTo {
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
+  '/student/career-audit': typeof StudentCareerAuditRoute
+  '/student/passport': typeof StudentPassportRoute
+  '/student/profile': typeof StudentProfileRoute
+  '/student/resume': typeof StudentResumeRoute
+  '/student/xray': typeof StudentXrayRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +111,11 @@ export interface FileRoutesById {
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
+  '/student/career-audit': typeof StudentCareerAuditRoute
+  '/student/passport': typeof StudentPassportRoute
+  '/student/profile': typeof StudentProfileRoute
+  '/student/resume': typeof StudentResumeRoute
+  '/student/xray': typeof StudentXrayRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +126,11 @@ export interface FileRouteTypes {
     | '/internship-xray'
     | '/profile'
     | '/resume-intelligence'
+    | '/student/career-audit'
+    | '/student/passport'
+    | '/student/profile'
+    | '/student/resume'
+    | '/student/xray'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +139,11 @@ export interface FileRouteTypes {
     | '/internship-xray'
     | '/profile'
     | '/resume-intelligence'
+    | '/student/career-audit'
+    | '/student/passport'
+    | '/student/profile'
+    | '/student/resume'
+    | '/student/xray'
   id:
     | '__root__'
     | '/'
@@ -97,6 +152,11 @@ export interface FileRouteTypes {
     | '/internship-xray'
     | '/profile'
     | '/resume-intelligence'
+    | '/student/career-audit'
+    | '/student/passport'
+    | '/student/profile'
+    | '/student/resume'
+    | '/student/xray'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +166,11 @@ export interface RootRouteChildren {
   InternshipXrayRoute: typeof InternshipXrayRoute
   ProfileRoute: typeof ProfileRoute
   ResumeIntelligenceRoute: typeof ResumeIntelligenceRoute
+  StudentCareerAuditRoute: typeof StudentCareerAuditRoute
+  StudentPassportRoute: typeof StudentPassportRoute
+  StudentProfileRoute: typeof StudentProfileRoute
+  StudentResumeRoute: typeof StudentResumeRoute
+  StudentXrayRoute: typeof StudentXrayRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +217,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResumeIntelligenceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/career-audit': {
+      id: '/student/career-audit'
+      path: '/student/career-audit'
+      fullPath: '/student/career-audit'
+      preLoaderRoute: typeof StudentCareerAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/passport': {
+      id: '/student/passport'
+      path: '/student/passport'
+      fullPath: '/student/passport'
+      preLoaderRoute: typeof StudentPassportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/profile': {
+      id: '/student/profile'
+      path: '/student/profile'
+      fullPath: '/student/profile'
+      preLoaderRoute: typeof StudentProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/resume': {
+      id: '/student/resume'
+      path: '/student/resume'
+      fullPath: '/student/resume'
+      preLoaderRoute: typeof StudentResumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/xray': {
+      id: '/student/xray'
+      path: '/student/xray'
+      fullPath: '/student/xray'
+      preLoaderRoute: typeof StudentXrayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +262,11 @@ const rootRouteChildren: RootRouteChildren = {
   InternshipXrayRoute: InternshipXrayRoute,
   ProfileRoute: ProfileRoute,
   ResumeIntelligenceRoute: ResumeIntelligenceRoute,
+  StudentCareerAuditRoute: StudentCareerAuditRoute,
+  StudentPassportRoute: StudentPassportRoute,
+  StudentProfileRoute: StudentProfileRoute,
+  StudentResumeRoute: StudentResumeRoute,
+  StudentXrayRoute: StudentXrayRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
