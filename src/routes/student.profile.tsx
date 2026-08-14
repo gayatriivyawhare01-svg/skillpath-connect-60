@@ -67,7 +67,7 @@ function ProfilePage() {
             ) : (
               <p className="text-sm text-muted-foreground">
                 No career audit yet.{" "}
-                <Link to="/career-audit" className="text-primary">
+                <Link to="/student/career-audit" className="text-primary">
                   Run the Career Audit
                 </Link>{" "}
                 to see your readiness and gaps here.
@@ -107,7 +107,7 @@ function ProfilePage() {
               ) : (
                 <p className="text-sm text-muted-foreground">
                   No internships recorded.{" "}
-                  <Link to="/internship-passport" className="text-primary">
+                  <Link to="/student/passport" className="text-primary">
                     Add your first one
                   </Link>
                   .
@@ -138,7 +138,7 @@ function ProfilePage() {
                 <p className="text-sm text-muted-foreground">Not calculated yet.</p>
               )}
               <Link
-                to="/career-audit"
+                to="/student/career-audit"
                 className="mt-5 inline-flex items-center gap-2 text-xs font-medium text-primary"
               >
                 {audit ? "Re-run career audit" : "Start career audit"}{" "}
@@ -169,7 +169,7 @@ function ProfilePage() {
               ) : (
                 <p className="text-sm text-muted-foreground">
                   No resume analysed yet.{" "}
-                  <Link to="/resume-intelligence" className="text-primary">
+                  <Link to="/student/resume" className="text-primary">
                     Analyse your resume
                   </Link>
                   .
