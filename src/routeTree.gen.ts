@@ -10,33 +10,102 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CareerAuditRouteImport } from './routes/career-audit'
+import { Route as InternshipPassportRouteImport } from './routes/internship-passport'
+import { Route as InternshipXrayRouteImport } from './routes/internship-xray'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ResumeIntelligenceRouteImport } from './routes/resume-intelligence'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerAuditRoute = CareerAuditRouteImport.update({
+  id: '/career-audit',
+  path: '/career-audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternshipPassportRoute = InternshipPassportRouteImport.update({
+  id: '/internship-passport',
+  path: '/internship-passport',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternshipXrayRoute = InternshipXrayRouteImport.update({
+  id: '/internship-xray',
+  path: '/internship-xray',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumeIntelligenceRoute = ResumeIntelligenceRouteImport.update({
+  id: '/resume-intelligence',
+  path: '/resume-intelligence',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/career-audit': typeof CareerAuditRoute
+  '/internship-passport': typeof InternshipPassportRoute
+  '/internship-xray': typeof InternshipXrayRoute
+  '/profile': typeof ProfileRoute
+  '/resume-intelligence': typeof ResumeIntelligenceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/career-audit': typeof CareerAuditRoute
+  '/internship-passport': typeof InternshipPassportRoute
+  '/internship-xray': typeof InternshipXrayRoute
+  '/profile': typeof ProfileRoute
+  '/resume-intelligence': typeof ResumeIntelligenceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/career-audit': typeof CareerAuditRoute
+  '/internship-passport': typeof InternshipPassportRoute
+  '/internship-xray': typeof InternshipXrayRoute
+  '/profile': typeof ProfileRoute
+  '/resume-intelligence': typeof ResumeIntelligenceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/career-audit'
+    | '/internship-passport'
+    | '/internship-xray'
+    | '/profile'
+    | '/resume-intelligence'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/career-audit'
+    | '/internship-passport'
+    | '/internship-xray'
+    | '/profile'
+    | '/resume-intelligence'
+  id:
+    | '__root__'
+    | '/'
+    | '/career-audit'
+    | '/internship-passport'
+    | '/internship-xray'
+    | '/profile'
+    | '/resume-intelligence'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CareerAuditRoute: typeof CareerAuditRoute
+  InternshipPassportRoute: typeof InternshipPassportRoute
+  InternshipXrayRoute: typeof InternshipXrayRoute
+  ProfileRoute: typeof ProfileRoute
+  ResumeIntelligenceRoute: typeof ResumeIntelligenceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +117,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career-audit': {
+      id: '/career-audit'
+      path: '/career-audit'
+      fullPath: '/career-audit'
+      preLoaderRoute: typeof CareerAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internship-passport': {
+      id: '/internship-passport'
+      path: '/internship-passport'
+      fullPath: '/internship-passport'
+      preLoaderRoute: typeof InternshipPassportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internship-xray': {
+      id: '/internship-xray'
+      path: '/internship-xray'
+      fullPath: '/internship-xray'
+      preLoaderRoute: typeof InternshipXrayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resume-intelligence': {
+      id: '/resume-intelligence'
+      path: '/resume-intelligence'
+      fullPath: '/resume-intelligence'
+      preLoaderRoute: typeof ResumeIntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CareerAuditRoute: CareerAuditRoute,
+  InternshipPassportRoute: InternshipPassportRoute,
+  InternshipXrayRoute: InternshipXrayRoute,
+  ProfileRoute: ProfileRoute,
+  ResumeIntelligenceRoute: ResumeIntelligenceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
