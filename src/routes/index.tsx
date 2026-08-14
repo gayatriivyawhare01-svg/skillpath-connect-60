@@ -1,145 +1,214 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
-  BadgeCheck,
-  BrainCircuit,
-  FileSearch,
-  ScanSearch,
+  Building2,
+  GraduationCap,
   ShieldCheck,
+  Users,
+  Workflow,
+  BadgeCheck,
 } from "lucide-react";
 import { GlassCard, Pill } from "@/components/report-ui";
+import { actions, useDB } from "@/lib/domain/store";
+import { LIFECYCLE, type Role } from "@/lib/domain/types";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "InternHub AI — Don't Apply Blindly. Apply Smartly." },
+      { title: "S2I — Skill2Intern | Internship to Employability Platform" },
       {
         name: "description",
         content:
-          "AI internship intelligence for Tier-2 & Tier-3 students: career audit, resume intelligence, internship X-Ray and a verified internship passport.",
+          "S2I connects students, companies, T&P cells and faculty on one internship lifecycle — assessment, matching, consent, offers, evidence and verified internship records.",
       },
-      { property: "og:title", content: "InternHub AI — Internship Intelligence Platform" },
+      { property: "og:title", content: "S2I — Skill2Intern" },
       {
         property: "og:description",
         content:
-          "Know your readiness, fix your skill gaps, verify the internship, and prove your journey to your college.",
+          "One connected internship-to-employability system for students, colleges, faculty, T&P cells and companies.",
       },
     ],
   }),
   component: Landing,
 });
 
-const FEATURES = [
+const ROLES: {
+  role: Role;
+  to: "/student" | "/tnp" | "/faculty" | "/company";
+  label: string;
+  icon: typeof GraduationCap;
+  blurb: string;
+  bullets: string[];
+}[] = [
   {
-    icon: BrainCircuit,
-    to: "/career-audit",
-    tag: "Hero feature",
-    title: "AI Career Audit",
-    body: "An 8-step consultation that produces a Career Readiness Index, Career GPS, skill-gap matrix, project ratings and a day-by-day 30-day sprint.",
+    role: "student",
+    to: "/student",
+    label: "Student",
+    icon: GraduationCap,
+    blurb: "Assess yourself, find matched internships, submit evidence, build a verified passport.",
+    bullets: ["Career assessment", "Matched opportunities", "Self-placed submission", "Internship passport"],
   },
   {
-    icon: FileSearch,
-    to: "/resume-intelligence",
-    tag: "Recruiter lens",
-    title: "Resume Intelligence",
-    body: "ATS score, keyword match, impact scoring, red flags and rewritten bullet points — with the reason each change matters.",
+    role: "tnp",
+    to: "/tnp",
+    label: "T&P Cell",
+    icon: Users,
+    blurb: "Run the institutional internship pipeline: shortlists, consent, offers, verification.",
+    bullets: ["Action centre", "Verification queue", "Progress monitoring", "Reports"],
   },
   {
-    icon: ScanSearch,
-    to: "/internship-xray",
-    tag: "Our USP",
-    title: "Internship X-Ray",
-    body: "Paste a link or JD and get a health score, trust level, career ROI, hidden risks and a clear Apply / Prepare First / Avoid verdict.",
-  },
-  {
+    role: "faculty",
+    to: "/faculty",
+    label: "Faculty",
     icon: BadgeCheck,
-    to: "/internship-passport",
-    tag: "For colleges too",
-    title: "Verified Internship Passport",
-    body: "A digital passport of your internship journey — verification, documents, deliverables and a placement-cell view.",
+    blurb: "Review only T&P-approved internships for your department and evaluate outcomes.",
+    bullets: ["Assigned students", "Academic permission", "Evidence review", "Evaluation"],
+  },
+  {
+    role: "company",
+    to: "/company",
+    label: "Company",
+    icon: Building2,
+    blurb: "Post requirements, see ranked candidates released by the T&P cell, hire and give feedback.",
+    bullets: ["Post opportunity", "Matched candidates", "Interviews & offers", "Performance feedback"],
   },
 ];
 
 function Landing() {
+  const db = useDB();
+  const navigate = useNavigate();
+
+  function enter(role: Role, to: (typeof ROLES)[number]["to"]) {
+    actions.setRole(role);
+    navigate({ to });
+  }
+
   return (
     <div>
       <section className="aurora relative overflow-hidden">
         <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
-        <div className="mx-auto max-w-5xl px-5 pt-24 pb-20 text-center">
+        <div className="mx-auto max-w-5xl px-5 pt-20 pb-14 text-center">
           <div className="animate-rise inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1.5 text-[11px] text-muted-foreground">
             <ShieldCheck className="size-3.5 text-primary" />
-            Internship Intelligence Platform — not a marketplace
+            Institutional internship platform — not a job board
           </div>
-          <h1 className="animate-rise mt-7 text-4xl leading-[1.08] font-semibold sm:text-6xl">
-            Don&apos;t Apply Blindly.
+          <h1 className="animate-rise mt-7 text-4xl leading-[1.08] font-semibold sm:text-5xl">
+            One evidence trail from
             <br />
-            <span className="gradient-text animate-shimmer">Apply Smartly.</span>
+            <span className="gradient-text animate-shimmer">skill to internship to employability.</span>
           </h1>
           <p className="animate-rise mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Students waste months applying to internships without knowing if they&apos;re ready or
-            whether the internship is genuine. InternHub AI analyzes your career profile, identifies
-            your skill gaps, evaluates internship quality, and helps you build a trusted internship
-            journey.
+            S2I connects the student, the company, the T&amp;P cell and the faculty coordinator on a
+            single internship lifecycle — so every internship ends as a record the institution can
+            actually stand behind.
           </p>
-          <div className="animate-rise mt-9 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              to="/career-audit"
-              className="gradient-brand inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5"
-            >
-              Start Career Audit <ArrowRight className="size-4" />
-            </Link>
-            <Link
-              to="/internship-passport"
-              className="glass glass-hover inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium"
-            >
-              View Demo
-            </Link>
-          </div>
-          <p className="mt-8 text-xs tracking-[0.2em] text-muted-foreground uppercase">
-            Know Yourself · Verify the Opportunity · Build Your Career
+          <p className="mt-7 text-[11px] tracking-[0.18em] text-muted-foreground uppercase">
+            {db.college.name} · demo environment
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-8">
+      <section className="mx-auto max-w-6xl px-5 pb-6">
+        <h2 className="mb-5 text-center text-sm font-medium tracking-wide text-muted-foreground uppercase">
+          Select your role to continue
+        </h2>
         <div className="grid gap-5 sm:grid-cols-2">
-          {FEATURES.map((f) => (
-            <Link key={f.to} to={f.to}>
-              <GlassCard hover className="h-full p-7">
+          {ROLES.map((r) => (
+            <button key={r.role} type="button" onClick={() => enter(r.role, r.to)} className="text-left">
+              <GlassCard hover className="h-full p-6">
                 <div className="flex items-start justify-between gap-4">
                   <span className="gradient-brand grid size-11 place-items-center rounded-xl">
-                    <f.icon className="size-5 text-primary-foreground" />
+                    <r.icon className="size-5 text-primary-foreground" />
                   </span>
-                  <Pill tone="brand">{f.tag}</Pill>
+                  <Pill tone="brand">{r.label}</Pill>
                 </div>
-                <h3 className="mt-5 text-xl font-semibold">{f.title}</h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{f.body}</p>
+                <h3 className="mt-5 text-lg font-semibold">Enter as {r.label}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.blurb}</p>
+                <ul className="mt-4 flex flex-wrap gap-1.5">
+                  {r.bullets.map((b) => (
+                    <li
+                      key={b}
+                      className="rounded-md bg-secondary/60 px-2 py-1 text-[11px] text-muted-foreground"
+                    >
+                      {b}
+                    </li>
+                  ))}
+                </ul>
                 <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-primary">
-                  Open <ArrowRight className="size-3.5" />
+                  Open workspace <ArrowRight className="size-3.5" />
                 </span>
               </GlassCard>
-            </Link>
+            </button>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pt-14">
-        <GlassCard className="p-8 sm:p-10">
-          <h2 className="text-2xl font-semibold">Four questions. Answered with evidence.</h2>
-          <div className="mt-7 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              ["Am I ready for internships?", "A Career Readiness Index built from 8 dimensions."],
-              ["What exactly should I improve?", "A prioritised skill-gap matrix with timelines."],
-              ["Is this internship worth my time?", "Health score, hidden risks and career ROI."],
-              ["How do I prove it's genuine?", "A verified passport your placement cell can read."],
-            ].map(([q, a]) => (
-              <div key={q} className="border-l border-border pl-4">
-                <p className="text-sm font-medium">{q}</p>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{a}</p>
-              </div>
+      <section className="mx-auto max-w-6xl px-5 pt-12">
+        <GlassCard className="p-7 sm:p-9">
+          <div className="flex items-center gap-2.5">
+            <Workflow className="size-4 text-primary" />
+            <h2 className="text-lg font-semibold">The lifecycle S2I tracks</h2>
+          </div>
+          <p className="mt-2 max-w-3xl text-xs leading-relaxed text-muted-foreground">
+            Both pathways — college-placed and self-placed — move through the same twelve stages, and
+            each transition is recorded against the person or organisation that performed it.
+          </p>
+          <ol className="mt-6 flex flex-wrap gap-2">
+            {LIFECYCLE.map((s, i) => (
+              <li
+                key={s}
+                className="flex items-center gap-2 rounded-lg border border-border/60 bg-secondary/30 px-2.5 py-1.5 text-[11px]"
+              >
+                <span className="text-primary tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                {s}
+              </li>
             ))}
+          </ol>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            <div className="rounded-xl border border-primary/25 bg-primary/5 p-5">
+              <Pill tone="brand">College-Placed</Pill>
+              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                Company posts a requirement → T&amp;P approves → matching engine ranks eligible
+                students → T&amp;P shortlists → interview → selection → consent → offer recorded →
+                joining → progress → faculty evaluation → verified.
+              </p>
+            </div>
+            <div className="rounded-xl border border-warning/25 bg-warning/5 p-5">
+              <Pill tone="warn">Self-Placed</Pill>
+              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                Student submits the company and offer they found → S2I runs a completeness and
+                consistency check → T&amp;P verification queue → T&amp;P decision → faculty
+                permission → progress → completion → verified. AI never approves a company.
+              </p>
+            </div>
           </div>
         </GlassCard>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pt-12 pb-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            ["Students on record", db.students.length],
+            ["Companies engaged", db.companies.length],
+            ["Live opportunities", db.opportunities.filter((o) => o.status === "Live").length],
+            ["Internships tracked", db.internships.length],
+          ].map(([label, value]) => (
+            <GlassCard key={String(label)} className="p-5">
+              <p className="font-display text-3xl font-semibold">{String(value)}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{label}</p>
+            </GlassCard>
+          ))}
+        </div>
+        <p className="mt-6 text-center text-xs text-muted-foreground">
+          Need the student feature suite directly?{" "}
+          <Link to="/student/career-audit" className="text-primary hover:underline">
+            Career assessment
+          </Link>
+          {" · "}
+          <Link to="/student/passport" className="text-primary hover:underline">
+            Internship passport
+          </Link>
+        </p>
       </section>
     </div>
   );
