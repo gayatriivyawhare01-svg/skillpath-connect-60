@@ -28,6 +28,10 @@ import { Route as StudentProfileRouteImport } from './routes/student.profile'
 import { Route as StudentResumeRouteImport } from './routes/student.resume'
 import { Route as StudentSelfPlacedRouteImport } from './routes/student.self-placed'
 import { Route as StudentXrayRouteImport } from './routes/student.xray'
+import { Route as TnpIndexRouteImport } from './routes/tnp.index'
+import { Route as TnpActionsRouteImport } from './routes/tnp.actions'
+import { Route as TnpCompaniesRouteImport } from './routes/tnp.companies'
+import { Route as TnpStudentsRouteImport } from './routes/tnp.students'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -124,6 +128,26 @@ const StudentXrayRoute = StudentXrayRouteImport.update({
   path: '/xray',
   getParentRoute: () => StudentRoute,
 } as any)
+const TnpIndexRoute = TnpIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpActionsRoute = TnpActionsRouteImport.update({
+  id: '/actions',
+  path: '/actions',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpCompaniesRoute = TnpCompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpStudentsRoute = TnpStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => TnpRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -135,7 +159,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
   '/student': typeof StudentRouteWithChildren
-  '/tnp': typeof TnpRoute
+  '/tnp': typeof TnpRouteWithChildren
   '/student/career-audit': typeof StudentCareerAuditRoute
   '/student/notifications': typeof StudentNotificationsRoute
   '/student/opportunities': typeof StudentOpportunitiesRoute
@@ -144,7 +168,11 @@ export interface FileRoutesByFullPath {
   '/student/resume': typeof StudentResumeRoute
   '/student/self-placed': typeof StudentSelfPlacedRoute
   '/student/xray': typeof StudentXrayRoute
+  '/tnp/actions': typeof TnpActionsRoute
+  '/tnp/companies': typeof TnpCompaniesRoute
+  '/tnp/students': typeof TnpStudentsRoute
   '/student/': typeof StudentIndexRoute
+  '/tnp/': typeof TnpIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -155,7 +183,6 @@ export interface FileRoutesByTo {
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
-  '/tnp': typeof TnpRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
   '/student/notifications': typeof StudentNotificationsRoute
   '/student/opportunities': typeof StudentOpportunitiesRoute
@@ -164,7 +191,11 @@ export interface FileRoutesByTo {
   '/student/resume': typeof StudentResumeRoute
   '/student/self-placed': typeof StudentSelfPlacedRoute
   '/student/xray': typeof StudentXrayRoute
+  '/tnp/actions': typeof TnpActionsRoute
+  '/tnp/companies': typeof TnpCompaniesRoute
+  '/tnp/students': typeof TnpStudentsRoute
   '/student': typeof StudentIndexRoute
+  '/tnp': typeof TnpIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -177,7 +208,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
   '/student': typeof StudentRouteWithChildren
-  '/tnp': typeof TnpRoute
+  '/tnp': typeof TnpRouteWithChildren
   '/student/career-audit': typeof StudentCareerAuditRoute
   '/student/notifications': typeof StudentNotificationsRoute
   '/student/opportunities': typeof StudentOpportunitiesRoute
@@ -186,7 +217,11 @@ export interface FileRoutesById {
   '/student/resume': typeof StudentResumeRoute
   '/student/self-placed': typeof StudentSelfPlacedRoute
   '/student/xray': typeof StudentXrayRoute
+  '/tnp/actions': typeof TnpActionsRoute
+  '/tnp/companies': typeof TnpCompaniesRoute
+  '/tnp/students': typeof TnpStudentsRoute
   '/student/': typeof StudentIndexRoute
+  '/tnp/': typeof TnpIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -209,7 +244,11 @@ export interface FileRouteTypes {
     | '/student/resume'
     | '/student/self-placed'
     | '/student/xray'
+    | '/tnp/actions'
+    | '/tnp/companies'
+    | '/tnp/students'
     | '/student/'
+    | '/tnp/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -220,7 +259,6 @@ export interface FileRouteTypes {
     | '/internship-xray'
     | '/profile'
     | '/resume-intelligence'
-    | '/tnp'
     | '/student/career-audit'
     | '/student/notifications'
     | '/student/opportunities'
@@ -229,7 +267,11 @@ export interface FileRouteTypes {
     | '/student/resume'
     | '/student/self-placed'
     | '/student/xray'
+    | '/tnp/actions'
+    | '/tnp/companies'
+    | '/tnp/students'
     | '/student'
+    | '/tnp'
   id:
     | '__root__'
     | '/'
@@ -250,7 +292,11 @@ export interface FileRouteTypes {
     | '/student/resume'
     | '/student/self-placed'
     | '/student/xray'
+    | '/tnp/actions'
+    | '/tnp/companies'
+    | '/tnp/students'
     | '/student/'
+    | '/tnp/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -263,7 +309,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   ResumeIntelligenceRoute: typeof ResumeIntelligenceRoute
   StudentRoute: typeof StudentRouteWithChildren
-  TnpRoute: typeof TnpRoute
+  TnpRoute: typeof TnpRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -401,6 +447,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentXrayRouteImport
       parentRoute: typeof StudentRoute
     }
+    '/tnp/': {
+      id: '/tnp/'
+      path: '/'
+      fullPath: '/tnp/'
+      preLoaderRoute: typeof TnpIndexRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/actions': {
+      id: '/tnp/actions'
+      path: '/actions'
+      fullPath: '/tnp/actions'
+      preLoaderRoute: typeof TnpActionsRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/companies': {
+      id: '/tnp/companies'
+      path: '/companies'
+      fullPath: '/tnp/companies'
+      preLoaderRoute: typeof TnpCompaniesRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/students': {
+      id: '/tnp/students'
+      path: '/students'
+      fullPath: '/tnp/students'
+      preLoaderRoute: typeof TnpStudentsRouteImport
+      parentRoute: typeof TnpRoute
+    }
   }
 }
 
@@ -431,6 +505,22 @@ const StudentRouteChildren: StudentRouteChildren = {
 const StudentRouteWithChildren =
   StudentRoute._addFileChildren(StudentRouteChildren)
 
+interface TnpRouteChildren {
+  TnpActionsRoute: typeof TnpActionsRoute
+  TnpCompaniesRoute: typeof TnpCompaniesRoute
+  TnpStudentsRoute: typeof TnpStudentsRoute
+  TnpIndexRoute: typeof TnpIndexRoute
+}
+
+const TnpRouteChildren: TnpRouteChildren = {
+  TnpActionsRoute: TnpActionsRoute,
+  TnpCompaniesRoute: TnpCompaniesRoute,
+  TnpStudentsRoute: TnpStudentsRoute,
+  TnpIndexRoute: TnpIndexRoute,
+}
+
+const TnpRouteWithChildren = TnpRoute._addFileChildren(TnpRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CareerAuditRoute: CareerAuditRoute,
@@ -441,7 +531,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   ResumeIntelligenceRoute: ResumeIntelligenceRoute,
   StudentRoute: StudentRouteWithChildren,
-  TnpRoute: TnpRoute,
+  TnpRoute: TnpRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
