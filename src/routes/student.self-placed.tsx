@@ -62,6 +62,8 @@ function SelfPlacedPage() {
     (i) => i.pathway === "self-placed",
   );
   if (!student) return null;
+  const studentId = student.id;
+  const facultyId = student.facultyId;
 
   const set = <K extends keyof typeof form>(key: K, value: (typeof form)[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -89,7 +91,7 @@ function SelfPlacedPage() {
     end.setMonth(end.getMonth() + form.durationMonths);
     actions.submitSelfPlaced({
       pathway: "self-placed",
-      studentId: student.id,
+      studentId,
       selfPlaced: {
         companyName: form.companyName,
         companyWebsite: form.companyWebsite,
@@ -113,7 +115,7 @@ function SelfPlacedPage() {
       review: "Student Submitted",
       verification: "Self Reported",
       facultyPermission: "Pending",
-      facultyId: student.facultyId,
+      facultyId,
       evidence: [],
       checkIns: [],
       riskFlags: form.hasOfferLetter ? [] : ["Offer letter not yet recorded"],

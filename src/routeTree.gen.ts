@@ -25,6 +25,7 @@ import { Route as StudentOpportunitiesRouteImport } from './routes/student.oppor
 import { Route as StudentPassportRouteImport } from './routes/student.passport'
 import { Route as StudentProfileRouteImport } from './routes/student.profile'
 import { Route as StudentResumeRouteImport } from './routes/student.resume'
+import { Route as StudentSelfPlacedRouteImport } from './routes/student.self-placed'
 import { Route as StudentXrayRouteImport } from './routes/student.xray'
 
 const IndexRoute = IndexRouteImport.update({
@@ -107,6 +108,11 @@ const StudentResumeRoute = StudentResumeRouteImport.update({
   path: '/resume',
   getParentRoute: () => StudentRoute,
 } as any)
+const StudentSelfPlacedRoute = StudentSelfPlacedRouteImport.update({
+  id: '/self-placed',
+  path: '/self-placed',
+  getParentRoute: () => StudentRoute,
+} as any)
 const StudentXrayRoute = StudentXrayRouteImport.update({
   id: '/xray',
   path: '/xray',
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
+  '/student/self-placed': typeof StudentSelfPlacedRoute
   '/student/xray': typeof StudentXrayRoute
   '/student/': typeof StudentIndexRoute
 }
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
+  '/student/self-placed': typeof StudentSelfPlacedRoute
   '/student/xray': typeof StudentXrayRoute
   '/student': typeof StudentIndexRoute
 }
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
+  '/student/self-placed': typeof StudentSelfPlacedRoute
   '/student/xray': typeof StudentXrayRoute
   '/student/': typeof StudentIndexRoute
 }
@@ -188,6 +197,7 @@ export interface FileRouteTypes {
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
+    | '/student/self-placed'
     | '/student/xray'
     | '/student/'
   fileRoutesByTo: FileRoutesByTo
@@ -206,6 +216,7 @@ export interface FileRouteTypes {
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
+    | '/student/self-placed'
     | '/student/xray'
     | '/student'
   id:
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
+    | '/student/self-placed'
     | '/student/xray'
     | '/student/'
   fileRoutesById: FileRoutesById
@@ -356,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentResumeRouteImport
       parentRoute: typeof StudentRoute
     }
+    '/student/self-placed': {
+      id: '/student/self-placed'
+      path: '/self-placed'
+      fullPath: '/student/self-placed'
+      preLoaderRoute: typeof StudentSelfPlacedRouteImport
+      parentRoute: typeof StudentRoute
+    }
     '/student/xray': {
       id: '/student/xray'
       path: '/xray'
@@ -372,6 +391,7 @@ interface StudentRouteChildren {
   StudentPassportRoute: typeof StudentPassportRoute
   StudentProfileRoute: typeof StudentProfileRoute
   StudentResumeRoute: typeof StudentResumeRoute
+  StudentSelfPlacedRoute: typeof StudentSelfPlacedRoute
   StudentXrayRoute: typeof StudentXrayRoute
   StudentIndexRoute: typeof StudentIndexRoute
 }
@@ -382,6 +402,7 @@ const StudentRouteChildren: StudentRouteChildren = {
   StudentPassportRoute: StudentPassportRoute,
   StudentProfileRoute: StudentProfileRoute,
   StudentResumeRoute: StudentResumeRoute,
+  StudentSelfPlacedRoute: StudentSelfPlacedRoute,
   StudentXrayRoute: StudentXrayRoute,
   StudentIndexRoute: StudentIndexRoute,
 }
