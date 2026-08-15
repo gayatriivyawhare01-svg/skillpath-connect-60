@@ -128,7 +128,15 @@ const RAW_COMPANIES: SeedCompany[] = [
   },
 ];
 
-type SeedStudent = Omit<Student, "collegeId">;
+export const COMPANIES: Company[] = RAW_COMPANIES.map((c, i) => ({
+  ...c,
+  accessCode: `COMPANY-${i + 1}`,
+}));
+
+type SeedStudent = Omit<
+  Student,
+  "collegeId" | "institutionId" | "degree" | "semester" | "graduationYear"
+>;
 
 const RAW_STUDENTS: SeedStudent[] = [
   {
@@ -324,7 +332,65 @@ const RAW_STUDENTS: SeedStudent[] = [
   },
 ];
 
-export const STUDENTS: Student[] = RAW_STUDENTS.map((s) => ({ ...s, collegeId: COLLEGE.id }));
+/** Deccan College students — used to prove institution isolation in the demo. */
+const RAW_STUDENTS_INST2: SeedStudent[] = [
+  {
+    id: "stu_21", name: "Fatima Sheikh", email: "fatima.s@deccancollege.ac.in", rollNo: "BCA23-011", phone: "+91 90280 11223",
+    department: "Computer Science", year: 3, cgpa: 8.1, city: "Nagpur",
+    skills: ["Python", "SQL", "Excel", "Power BI"],
+    softSkills: ["Communication"],
+    projects: [{ title: "Retail Billing Analytics", description: "SQL reporting layer and Power BI dashboard for a family retail business.", skills: ["SQL", "Power BI"] }],
+    certifications: ["Google Data Analytics"],
+    interests: ["Analytics"], preferredRoles: ["Data Analyst"], preferredDomain: "Data & Analytics",
+    preferredLocation: "Nagpur", preferredModes: ["Onsite", "Hybrid"],
+    availableFrom: offset(-8), availableMonths: 6, previousInternships: 0,
+    resumeSummary: "BCA student with practical reporting and dashboarding work.",
+    facultyId: "fac_9", assessmentComplete: true, assessmentUpdatedAt: stamp(-12), readinessIndex: 70,
+  },
+  {
+    id: "stu_22", name: "Omkar Deshmukh", email: "omkar.d@deccancollege.ac.in", rollNo: "BSC22-004", phone: "+91 89750 66412",
+    department: "Computer Science", year: 2, cgpa: 7.4, city: "Nagpur",
+    skills: ["JavaScript", "HTML", "CSS", "React"],
+    softSkills: ["Teamwork"],
+    projects: [{ title: "College Event Portal", description: "React front end for departmental event registrations.", skills: ["React"] }],
+    certifications: [],
+    interests: ["Web development"], preferredRoles: ["Frontend Developer"], preferredDomain: "Product Engineering",
+    preferredLocation: "Remote", preferredModes: ["Remote"],
+    availableFrom: offset(20), availableMonths: 4, previousInternships: 0,
+    resumeSummary: "Second-year student building front-end fundamentals.",
+    facultyId: "fac_9", assessmentComplete: false,
+  },
+  {
+    id: "stu_23", name: "Ritika Bansal", email: "ritika.b@deccancollege.ac.in", rollNo: "BCOM22-058", phone: "+91 91450 77120",
+    department: "Commerce & Analytics", year: 3, cgpa: 8.8, city: "Nagpur",
+    skills: ["Excel", "SQL", "Statistics", "Tableau"],
+    softSkills: ["Presentation", "Analytical thinking"],
+    projects: [{ title: "GST Filing Trends", description: "Analysed two years of filing data for a chartered accountancy firm.", skills: ["Excel", "SQL"] }],
+    certifications: ["Tableau Desktop Specialist"],
+    interests: ["Business analytics"], preferredRoles: ["Business Analyst", "Data Analyst"], preferredDomain: "Data & Analytics",
+    preferredLocation: "Pune", preferredModes: ["Hybrid", "Remote"],
+    availableFrom: offset(-3), availableMonths: 6, previousInternships: 1,
+    resumeSummary: "Commerce student with strong spreadsheet modelling and BI exposure.",
+    facultyId: "fac_9", assessmentComplete: true, assessmentUpdatedAt: stamp(-5), readinessIndex: 73,
+  },
+];
+
+function withInstitution(list: SeedStudent[], institutionId: string): Student[] {
+  const inst = INSTITUTIONS.find((i) => i.id === institutionId)!;
+  return list.map((s) => ({
+    ...s,
+    collegeId: institutionId,
+    institutionId,
+    degree: inst.degrees[0] ?? "B.E.",
+    semester: s.year * 2 - 1,
+    graduationYear: new Date().getFullYear() + Math.max(0, 4 - s.year),
+  }));
+}
+
+export const STUDENTS: Student[] = [
+  ...withInstitution(RAW_STUDENTS, "inst_1"),
+  ...withInstitution(RAW_STUDENTS_INST2, "inst_2"),
+];
 
 export const OPPORTUNITIES: Opportunity[] = [
   {
