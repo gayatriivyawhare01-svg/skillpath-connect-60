@@ -24,6 +24,10 @@ import { Route as CompanyCandidatesRouteImport } from './routes/company.candidat
 import { Route as CompanyInternsRouteImport } from './routes/company.interns'
 import { Route as CompanyPostRouteImport } from './routes/company.post'
 import { Route as CompanyProfileRouteImport } from './routes/company.profile'
+import { Route as FacultyIndexRouteImport } from './routes/faculty.index'
+import { Route as FacultyEvaluationsRouteImport } from './routes/faculty.evaluations'
+import { Route as FacultyPermissionsRouteImport } from './routes/faculty.permissions'
+import { Route as FacultyStudentsRouteImport } from './routes/faculty.students'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as StudentCareerAuditRouteImport } from './routes/student.career-audit'
 import { Route as StudentNotificationsRouteImport } from './routes/student.notifications'
@@ -117,6 +121,26 @@ const CompanyProfileRoute = CompanyProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
   getParentRoute: () => CompanyRoute,
+} as any)
+const FacultyIndexRoute = FacultyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyEvaluationsRoute = FacultyEvaluationsRouteImport.update({
+  id: '/evaluations',
+  path: '/evaluations',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyPermissionsRoute = FacultyPermissionsRouteImport.update({
+  id: '/permissions',
+  path: '/permissions',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyStudentsRoute = FacultyStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => FacultyRoute,
 } as any)
 const StudentIndexRoute = StudentIndexRouteImport.update({
   id: '/',
@@ -213,7 +237,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/career-audit': typeof CareerAuditRoute
   '/company': typeof CompanyRouteWithChildren
-  '/faculty': typeof FacultyRoute
+  '/faculty': typeof FacultyRouteWithChildren
   '/internship-passport': typeof InternshipPassportRoute
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
@@ -224,6 +248,9 @@ export interface FileRoutesByFullPath {
   '/company/interns': typeof CompanyInternsRoute
   '/company/post': typeof CompanyPostRoute
   '/company/profile': typeof CompanyProfileRoute
+  '/faculty/evaluations': typeof FacultyEvaluationsRoute
+  '/faculty/permissions': typeof FacultyPermissionsRoute
+  '/faculty/students': typeof FacultyStudentsRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
   '/student/notifications': typeof StudentNotificationsRoute
   '/student/opportunities': typeof StudentOpportunitiesRoute
@@ -241,13 +268,13 @@ export interface FileRoutesByFullPath {
   '/tnp/students': typeof TnpStudentsRoute
   '/tnp/verification': typeof TnpVerificationRoute
   '/company/': typeof CompanyIndexRoute
+  '/faculty/': typeof FacultyIndexRoute
   '/student/': typeof StudentIndexRoute
   '/tnp/': typeof TnpIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/career-audit': typeof CareerAuditRoute
-  '/faculty': typeof FacultyRoute
   '/internship-passport': typeof InternshipPassportRoute
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
@@ -256,6 +283,9 @@ export interface FileRoutesByTo {
   '/company/interns': typeof CompanyInternsRoute
   '/company/post': typeof CompanyPostRoute
   '/company/profile': typeof CompanyProfileRoute
+  '/faculty/evaluations': typeof FacultyEvaluationsRoute
+  '/faculty/permissions': typeof FacultyPermissionsRoute
+  '/faculty/students': typeof FacultyStudentsRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
   '/student/notifications': typeof StudentNotificationsRoute
   '/student/opportunities': typeof StudentOpportunitiesRoute
@@ -273,6 +303,7 @@ export interface FileRoutesByTo {
   '/tnp/students': typeof TnpStudentsRoute
   '/tnp/verification': typeof TnpVerificationRoute
   '/company': typeof CompanyIndexRoute
+  '/faculty': typeof FacultyIndexRoute
   '/student': typeof StudentIndexRoute
   '/tnp': typeof TnpIndexRoute
 }
@@ -281,7 +312,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/career-audit': typeof CareerAuditRoute
   '/company': typeof CompanyRouteWithChildren
-  '/faculty': typeof FacultyRoute
+  '/faculty': typeof FacultyRouteWithChildren
   '/internship-passport': typeof InternshipPassportRoute
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
@@ -292,6 +323,9 @@ export interface FileRoutesById {
   '/company/interns': typeof CompanyInternsRoute
   '/company/post': typeof CompanyPostRoute
   '/company/profile': typeof CompanyProfileRoute
+  '/faculty/evaluations': typeof FacultyEvaluationsRoute
+  '/faculty/permissions': typeof FacultyPermissionsRoute
+  '/faculty/students': typeof FacultyStudentsRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
   '/student/notifications': typeof StudentNotificationsRoute
   '/student/opportunities': typeof StudentOpportunitiesRoute
@@ -309,6 +343,7 @@ export interface FileRoutesById {
   '/tnp/students': typeof TnpStudentsRoute
   '/tnp/verification': typeof TnpVerificationRoute
   '/company/': typeof CompanyIndexRoute
+  '/faculty/': typeof FacultyIndexRoute
   '/student/': typeof StudentIndexRoute
   '/tnp/': typeof TnpIndexRoute
 }
@@ -329,6 +364,9 @@ export interface FileRouteTypes {
     | '/company/interns'
     | '/company/post'
     | '/company/profile'
+    | '/faculty/evaluations'
+    | '/faculty/permissions'
+    | '/faculty/students'
     | '/student/career-audit'
     | '/student/notifications'
     | '/student/opportunities'
@@ -346,13 +384,13 @@ export interface FileRouteTypes {
     | '/tnp/students'
     | '/tnp/verification'
     | '/company/'
+    | '/faculty/'
     | '/student/'
     | '/tnp/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/career-audit'
-    | '/faculty'
     | '/internship-passport'
     | '/internship-xray'
     | '/profile'
@@ -361,6 +399,9 @@ export interface FileRouteTypes {
     | '/company/interns'
     | '/company/post'
     | '/company/profile'
+    | '/faculty/evaluations'
+    | '/faculty/permissions'
+    | '/faculty/students'
     | '/student/career-audit'
     | '/student/notifications'
     | '/student/opportunities'
@@ -378,6 +419,7 @@ export interface FileRouteTypes {
     | '/tnp/students'
     | '/tnp/verification'
     | '/company'
+    | '/faculty'
     | '/student'
     | '/tnp'
   id:
@@ -396,6 +438,9 @@ export interface FileRouteTypes {
     | '/company/interns'
     | '/company/post'
     | '/company/profile'
+    | '/faculty/evaluations'
+    | '/faculty/permissions'
+    | '/faculty/students'
     | '/student/career-audit'
     | '/student/notifications'
     | '/student/opportunities'
@@ -413,6 +458,7 @@ export interface FileRouteTypes {
     | '/tnp/students'
     | '/tnp/verification'
     | '/company/'
+    | '/faculty/'
     | '/student/'
     | '/tnp/'
   fileRoutesById: FileRoutesById
@@ -421,7 +467,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CareerAuditRoute: typeof CareerAuditRoute
   CompanyRoute: typeof CompanyRouteWithChildren
-  FacultyRoute: typeof FacultyRoute
+  FacultyRoute: typeof FacultyRouteWithChildren
   InternshipPassportRoute: typeof InternshipPassportRoute
   InternshipXrayRoute: typeof InternshipXrayRoute
   ProfileRoute: typeof ProfileRoute
@@ -536,6 +582,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/company/profile'
       preLoaderRoute: typeof CompanyProfileRouteImport
       parentRoute: typeof CompanyRoute
+    }
+    '/faculty/': {
+      id: '/faculty/'
+      path: '/'
+      fullPath: '/faculty/'
+      preLoaderRoute: typeof FacultyIndexRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/faculty/evaluations': {
+      id: '/faculty/evaluations'
+      path: '/evaluations'
+      fullPath: '/faculty/evaluations'
+      preLoaderRoute: typeof FacultyEvaluationsRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/faculty/permissions': {
+      id: '/faculty/permissions'
+      path: '/permissions'
+      fullPath: '/faculty/permissions'
+      preLoaderRoute: typeof FacultyPermissionsRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/faculty/students': {
+      id: '/faculty/students'
+      path: '/students'
+      fullPath: '/faculty/students'
+      preLoaderRoute: typeof FacultyStudentsRouteImport
+      parentRoute: typeof FacultyRoute
     }
     '/student/': {
       id: '/student/'
@@ -685,6 +759,23 @@ const CompanyRouteChildren: CompanyRouteChildren = {
 const CompanyRouteWithChildren =
   CompanyRoute._addFileChildren(CompanyRouteChildren)
 
+interface FacultyRouteChildren {
+  FacultyEvaluationsRoute: typeof FacultyEvaluationsRoute
+  FacultyPermissionsRoute: typeof FacultyPermissionsRoute
+  FacultyStudentsRoute: typeof FacultyStudentsRoute
+  FacultyIndexRoute: typeof FacultyIndexRoute
+}
+
+const FacultyRouteChildren: FacultyRouteChildren = {
+  FacultyEvaluationsRoute: FacultyEvaluationsRoute,
+  FacultyPermissionsRoute: FacultyPermissionsRoute,
+  FacultyStudentsRoute: FacultyStudentsRoute,
+  FacultyIndexRoute: FacultyIndexRoute,
+}
+
+const FacultyRouteWithChildren =
+  FacultyRoute._addFileChildren(FacultyRouteChildren)
+
 interface StudentRouteChildren {
   StudentCareerAuditRoute: typeof StudentCareerAuditRoute
   StudentNotificationsRoute: typeof StudentNotificationsRoute
@@ -742,7 +833,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CareerAuditRoute: CareerAuditRoute,
   CompanyRoute: CompanyRouteWithChildren,
-  FacultyRoute: FacultyRoute,
+  FacultyRoute: FacultyRouteWithChildren,
   InternshipPassportRoute: InternshipPassportRoute,
   InternshipXrayRoute: InternshipXrayRoute,
   ProfileRoute: ProfileRoute,

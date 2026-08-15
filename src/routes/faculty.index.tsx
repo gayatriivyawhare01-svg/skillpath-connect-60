@@ -51,7 +51,7 @@ function FacultyDashboard() {
         <StatCard label="Evaluations due" value={evaluations.length} icon={ClipboardList} tone="brand" />
         <StatCard
           label="Verified"
-          value={records.filter((i) => i.verification === "Institutionally Verified").length}
+          value={records.filter((i) => i.review === "Institutionally Verified").length}
           icon={BadgeCheck}
           tone="good"
         />
