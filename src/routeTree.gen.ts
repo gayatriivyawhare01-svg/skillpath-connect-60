@@ -21,6 +21,7 @@ import { Route as StudentRouteImport } from './routes/student'
 import { Route as TnpRouteImport } from './routes/tnp'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as StudentCareerAuditRouteImport } from './routes/student.career-audit'
+import { Route as StudentOpportunitiesRouteImport } from './routes/student.opportunities'
 import { Route as StudentPassportRouteImport } from './routes/student.passport'
 import { Route as StudentProfileRouteImport } from './routes/student.profile'
 import { Route as StudentResumeRouteImport } from './routes/student.resume'
@@ -86,6 +87,11 @@ const StudentCareerAuditRoute = StudentCareerAuditRouteImport.update({
   path: '/career-audit',
   getParentRoute: () => StudentRoute,
 } as any)
+const StudentOpportunitiesRoute = StudentOpportunitiesRouteImport.update({
+  id: '/opportunities',
+  path: '/opportunities',
+  getParentRoute: () => StudentRoute,
+} as any)
 const StudentPassportRoute = StudentPassportRouteImport.update({
   id: '/passport',
   path: '/passport',
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/student': typeof StudentRouteWithChildren
   '/tnp': typeof TnpRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
+  '/student/opportunities': typeof StudentOpportunitiesRoute
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/resume-intelligence': typeof ResumeIntelligenceRoute
   '/tnp': typeof TnpRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
+  '/student/opportunities': typeof StudentOpportunitiesRoute
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/student': typeof StudentRouteWithChildren
   '/tnp': typeof TnpRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
+  '/student/opportunities': typeof StudentOpportunitiesRoute
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/student'
     | '/tnp'
     | '/student/career-audit'
+    | '/student/opportunities'
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
     | '/resume-intelligence'
     | '/tnp'
     | '/student/career-audit'
+    | '/student/opportunities'
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/student'
     | '/tnp'
     | '/student/career-audit'
+    | '/student/opportunities'
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
@@ -316,6 +328,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentCareerAuditRouteImport
       parentRoute: typeof StudentRoute
     }
+    '/student/opportunities': {
+      id: '/student/opportunities'
+      path: '/opportunities'
+      fullPath: '/student/opportunities'
+      preLoaderRoute: typeof StudentOpportunitiesRouteImport
+      parentRoute: typeof StudentRoute
+    }
     '/student/passport': {
       id: '/student/passport'
       path: '/passport'
@@ -349,6 +368,7 @@ declare module '@tanstack/react-router' {
 
 interface StudentRouteChildren {
   StudentCareerAuditRoute: typeof StudentCareerAuditRoute
+  StudentOpportunitiesRoute: typeof StudentOpportunitiesRoute
   StudentPassportRoute: typeof StudentPassportRoute
   StudentProfileRoute: typeof StudentProfileRoute
   StudentResumeRoute: typeof StudentResumeRoute
@@ -358,6 +378,7 @@ interface StudentRouteChildren {
 
 const StudentRouteChildren: StudentRouteChildren = {
   StudentCareerAuditRoute: StudentCareerAuditRoute,
+  StudentOpportunitiesRoute: StudentOpportunitiesRoute,
   StudentPassportRoute: StudentPassportRoute,
   StudentProfileRoute: StudentProfileRoute,
   StudentResumeRoute: StudentResumeRoute,

@@ -90,7 +90,7 @@ function StudentOpportunities() {
                   </div>
                   <div className="text-right">
                     <Pill tone={match.score >= 70 ? "good" : match.score >= 45 ? "warn" : "neutral"}>
-                      {match.score}% · {matchBand(match.score)}
+                      {match.score}% · {matchBand(match.score).label}
                     </Pill>
                     <div className="mt-2">
                       {applied.has(o.id) ? (
