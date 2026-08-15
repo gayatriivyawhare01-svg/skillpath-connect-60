@@ -158,6 +158,8 @@ export type Company = {
   contactPhone: string;
   approval: CompanyApproval;
   registeredAt: string;
+  /** Demo stand-in for a company recruiter account password. */
+  accessCode: string;
 };
 
 export type Faculty = {
@@ -208,6 +210,8 @@ export type Opportunity = {
   id: string;
   companyId: string;
   pathway: "college-placed";
+  /** Institutions this posting is released to. Multi-tenancy boundary. */
+  institutionIds: string[];
   role: string;
   domain: string;
   location: string;
@@ -414,6 +418,7 @@ export type Notification = {
   id: string;
   audience: Role;
   audienceId: string;
+  institutionId?: string;
   kind: NotificationKind;
   title: string;
   body: string;
@@ -425,14 +430,19 @@ export type Notification = {
 
 export type Session = {
   role: Role | null;
+  signedIn: boolean;
+  institutionId: string;
   studentId: string;
   facultyId: string;
   companyId: string;
+  tnpUserId: string;
 };
 
 export type DB = {
   version: number;
   session: Session;
+  institutions: Institution[];
+  tnpUsers: TnpUser[];
   college: College;
   students: Student[];
   companies: Company[];
