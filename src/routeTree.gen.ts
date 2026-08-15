@@ -31,7 +31,12 @@ import { Route as StudentXrayRouteImport } from './routes/student.xray'
 import { Route as TnpIndexRouteImport } from './routes/tnp.index'
 import { Route as TnpActionsRouteImport } from './routes/tnp.actions'
 import { Route as TnpCompaniesRouteImport } from './routes/tnp.companies'
+import { Route as TnpInternshipsRouteImport } from './routes/tnp.internships'
+import { Route as TnpMonitoringRouteImport } from './routes/tnp.monitoring'
+import { Route as TnpOffersRouteImport } from './routes/tnp.offers'
+import { Route as TnpReportsRouteImport } from './routes/tnp.reports'
 import { Route as TnpStudentsRouteImport } from './routes/tnp.students'
+import { Route as TnpVerificationRouteImport } from './routes/tnp.verification'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -143,9 +148,34 @@ const TnpCompaniesRoute = TnpCompaniesRouteImport.update({
   path: '/companies',
   getParentRoute: () => TnpRoute,
 } as any)
+const TnpInternshipsRoute = TnpInternshipsRouteImport.update({
+  id: '/internships',
+  path: '/internships',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpMonitoringRoute = TnpMonitoringRouteImport.update({
+  id: '/monitoring',
+  path: '/monitoring',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpOffersRoute = TnpOffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpReportsRoute = TnpReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => TnpRoute,
+} as any)
 const TnpStudentsRoute = TnpStudentsRouteImport.update({
   id: '/students',
   path: '/students',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpVerificationRoute = TnpVerificationRouteImport.update({
+  id: '/verification',
+  path: '/verification',
   getParentRoute: () => TnpRoute,
 } as any)
 
@@ -170,7 +200,12 @@ export interface FileRoutesByFullPath {
   '/student/xray': typeof StudentXrayRoute
   '/tnp/actions': typeof TnpActionsRoute
   '/tnp/companies': typeof TnpCompaniesRoute
+  '/tnp/internships': typeof TnpInternshipsRoute
+  '/tnp/monitoring': typeof TnpMonitoringRoute
+  '/tnp/offers': typeof TnpOffersRoute
+  '/tnp/reports': typeof TnpReportsRoute
   '/tnp/students': typeof TnpStudentsRoute
+  '/tnp/verification': typeof TnpVerificationRoute
   '/student/': typeof StudentIndexRoute
   '/tnp/': typeof TnpIndexRoute
 }
@@ -193,7 +228,12 @@ export interface FileRoutesByTo {
   '/student/xray': typeof StudentXrayRoute
   '/tnp/actions': typeof TnpActionsRoute
   '/tnp/companies': typeof TnpCompaniesRoute
+  '/tnp/internships': typeof TnpInternshipsRoute
+  '/tnp/monitoring': typeof TnpMonitoringRoute
+  '/tnp/offers': typeof TnpOffersRoute
+  '/tnp/reports': typeof TnpReportsRoute
   '/tnp/students': typeof TnpStudentsRoute
+  '/tnp/verification': typeof TnpVerificationRoute
   '/student': typeof StudentIndexRoute
   '/tnp': typeof TnpIndexRoute
 }
@@ -219,7 +259,12 @@ export interface FileRoutesById {
   '/student/xray': typeof StudentXrayRoute
   '/tnp/actions': typeof TnpActionsRoute
   '/tnp/companies': typeof TnpCompaniesRoute
+  '/tnp/internships': typeof TnpInternshipsRoute
+  '/tnp/monitoring': typeof TnpMonitoringRoute
+  '/tnp/offers': typeof TnpOffersRoute
+  '/tnp/reports': typeof TnpReportsRoute
   '/tnp/students': typeof TnpStudentsRoute
+  '/tnp/verification': typeof TnpVerificationRoute
   '/student/': typeof StudentIndexRoute
   '/tnp/': typeof TnpIndexRoute
 }
@@ -246,7 +291,12 @@ export interface FileRouteTypes {
     | '/student/xray'
     | '/tnp/actions'
     | '/tnp/companies'
+    | '/tnp/internships'
+    | '/tnp/monitoring'
+    | '/tnp/offers'
+    | '/tnp/reports'
     | '/tnp/students'
+    | '/tnp/verification'
     | '/student/'
     | '/tnp/'
   fileRoutesByTo: FileRoutesByTo
@@ -269,7 +319,12 @@ export interface FileRouteTypes {
     | '/student/xray'
     | '/tnp/actions'
     | '/tnp/companies'
+    | '/tnp/internships'
+    | '/tnp/monitoring'
+    | '/tnp/offers'
+    | '/tnp/reports'
     | '/tnp/students'
+    | '/tnp/verification'
     | '/student'
     | '/tnp'
   id:
@@ -294,7 +349,12 @@ export interface FileRouteTypes {
     | '/student/xray'
     | '/tnp/actions'
     | '/tnp/companies'
+    | '/tnp/internships'
+    | '/tnp/monitoring'
+    | '/tnp/offers'
+    | '/tnp/reports'
     | '/tnp/students'
+    | '/tnp/verification'
     | '/student/'
     | '/tnp/'
   fileRoutesById: FileRoutesById
@@ -468,11 +528,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TnpCompaniesRouteImport
       parentRoute: typeof TnpRoute
     }
+    '/tnp/internships': {
+      id: '/tnp/internships'
+      path: '/internships'
+      fullPath: '/tnp/internships'
+      preLoaderRoute: typeof TnpInternshipsRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/monitoring': {
+      id: '/tnp/monitoring'
+      path: '/monitoring'
+      fullPath: '/tnp/monitoring'
+      preLoaderRoute: typeof TnpMonitoringRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/offers': {
+      id: '/tnp/offers'
+      path: '/offers'
+      fullPath: '/tnp/offers'
+      preLoaderRoute: typeof TnpOffersRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/reports': {
+      id: '/tnp/reports'
+      path: '/reports'
+      fullPath: '/tnp/reports'
+      preLoaderRoute: typeof TnpReportsRouteImport
+      parentRoute: typeof TnpRoute
+    }
     '/tnp/students': {
       id: '/tnp/students'
       path: '/students'
       fullPath: '/tnp/students'
       preLoaderRoute: typeof TnpStudentsRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/verification': {
+      id: '/tnp/verification'
+      path: '/verification'
+      fullPath: '/tnp/verification'
+      preLoaderRoute: typeof TnpVerificationRouteImport
       parentRoute: typeof TnpRoute
     }
   }
@@ -508,14 +603,24 @@ const StudentRouteWithChildren =
 interface TnpRouteChildren {
   TnpActionsRoute: typeof TnpActionsRoute
   TnpCompaniesRoute: typeof TnpCompaniesRoute
+  TnpInternshipsRoute: typeof TnpInternshipsRoute
+  TnpMonitoringRoute: typeof TnpMonitoringRoute
+  TnpOffersRoute: typeof TnpOffersRoute
+  TnpReportsRoute: typeof TnpReportsRoute
   TnpStudentsRoute: typeof TnpStudentsRoute
+  TnpVerificationRoute: typeof TnpVerificationRoute
   TnpIndexRoute: typeof TnpIndexRoute
 }
 
 const TnpRouteChildren: TnpRouteChildren = {
   TnpActionsRoute: TnpActionsRoute,
   TnpCompaniesRoute: TnpCompaniesRoute,
+  TnpInternshipsRoute: TnpInternshipsRoute,
+  TnpMonitoringRoute: TnpMonitoringRoute,
+  TnpOffersRoute: TnpOffersRoute,
+  TnpReportsRoute: TnpReportsRoute,
   TnpStudentsRoute: TnpStudentsRoute,
+  TnpVerificationRoute: TnpVerificationRoute,
   TnpIndexRoute: TnpIndexRoute,
 }
 
