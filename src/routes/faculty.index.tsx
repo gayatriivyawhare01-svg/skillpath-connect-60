@@ -20,7 +20,7 @@ export const Route = createFileRoute("/faculty/")({
       },
     ],
   }),
-  component: FacultyDashboard;
+  component: FacultyDashboard,
 });
 
 function FacultyDashboard() {
