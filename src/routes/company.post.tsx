@@ -55,6 +55,7 @@ function PostOpportunity() {
     deadline: todayISO(),
   });
   if (!company) return null;
+  const companyId = company.id;
 
   const set = <K extends keyof typeof f>(k: K, v: (typeof f)[K]) =>
     setF((prev) => ({ ...prev, [k]: v }));
@@ -74,7 +75,7 @@ function PostOpportunity() {
       return;
     }
     actions.postOpportunity({
-      companyId: company.id,
+      companyId,
       role: f.role,
       domain: f.domain,
       location: f.location,
