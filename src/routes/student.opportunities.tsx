@@ -30,7 +30,7 @@ export const Route = createFileRoute("/student/opportunities")({
       },
     ],
   }),
-  component: StudentOpportunities;
+  component: StudentOpportunities,
 });
 
 function StudentOpportunities() {
