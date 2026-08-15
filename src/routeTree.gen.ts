@@ -19,6 +19,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ResumeIntelligenceRouteImport } from './routes/resume-intelligence'
 import { Route as StudentRouteImport } from './routes/student'
 import { Route as TnpRouteImport } from './routes/tnp'
+import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as StudentCareerAuditRouteImport } from './routes/student.career-audit'
 import { Route as StudentPassportRouteImport } from './routes/student.passport'
 import { Route as StudentProfileRouteImport } from './routes/student.profile'
@@ -75,6 +76,11 @@ const TnpRoute = TnpRouteImport.update({
   path: '/tnp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentIndexRoute = StudentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StudentRoute,
+} as any)
 const StudentCareerAuditRoute = StudentCareerAuditRouteImport.update({
   id: '/career-audit',
   path: '/career-audit',
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
   '/student/xray': typeof StudentXrayRoute
+  '/student/': typeof StudentIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -127,13 +134,13 @@ export interface FileRoutesByTo {
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
-  '/student': typeof StudentRouteWithChildren
   '/tnp': typeof TnpRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
   '/student/xray': typeof StudentXrayRoute
+  '/student': typeof StudentIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -152,6 +159,7 @@ export interface FileRoutesById {
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
   '/student/xray': typeof StudentXrayRoute
+  '/student/': typeof StudentIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -171,6 +179,7 @@ export interface FileRouteTypes {
     | '/student/profile'
     | '/student/resume'
     | '/student/xray'
+    | '/student/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -181,13 +190,13 @@ export interface FileRouteTypes {
     | '/internship-xray'
     | '/profile'
     | '/resume-intelligence'
-    | '/student'
     | '/tnp'
     | '/student/career-audit'
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
     | '/student/xray'
+    | '/student'
   id:
     | '__root__'
     | '/'
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/student/profile'
     | '/student/resume'
     | '/student/xray'
+    | '/student/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -292,6 +302,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TnpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/': {
+      id: '/student/'
+      path: '/'
+      fullPath: '/student/'
+      preLoaderRoute: typeof StudentIndexRouteImport
+      parentRoute: typeof StudentRoute
+    }
     '/student/career-audit': {
       id: '/student/career-audit'
       path: '/career-audit'
@@ -336,6 +353,7 @@ interface StudentRouteChildren {
   StudentProfileRoute: typeof StudentProfileRoute
   StudentResumeRoute: typeof StudentResumeRoute
   StudentXrayRoute: typeof StudentXrayRoute
+  StudentIndexRoute: typeof StudentIndexRoute
 }
 
 const StudentRouteChildren: StudentRouteChildren = {
@@ -344,6 +362,7 @@ const StudentRouteChildren: StudentRouteChildren = {
   StudentProfileRoute: StudentProfileRoute,
   StudentResumeRoute: StudentResumeRoute,
   StudentXrayRoute: StudentXrayRoute,
+  StudentIndexRoute: StudentIndexRoute,
 }
 
 const StudentRouteWithChildren =
