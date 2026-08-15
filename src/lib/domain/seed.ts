@@ -5,10 +5,12 @@ import type {
   EvidenceItem,
   Faculty,
   HistoryEntry,
+  Institution,
   Internship,
   Notification,
   Opportunity,
   Student,
+  TnpUser,
 } from "./types";
 
 const TODAY = new Date();
@@ -26,21 +28,76 @@ function h(days: number, actor: HistoryEntry["actor"], actorName: string, event:
   return note ? { at: stamp(days), actor, actorName, event, note } : { at: stamp(days), actor, actorName, event };
 }
 
-export const COLLEGE = {
-  id: "col_1",
-  name: "Sardar Institute of Technology",
-  city: "Pune",
-  tnpHead: "Dr. Meena Rathore",
-  tnpEmail: "tnp@sit.edu.in",
-};
+export const INSTITUTIONS: Institution[] = [
+  {
+    id: "inst_1",
+    name: "Sardar Institute of Technology",
+    code: "SIT001",
+    city: "Pune",
+    tnpHead: "Dr. Meena Rathore",
+    tnpEmail: "tnp@sit.edu.in",
+    departments: ["Computer Engineering", "Information Technology", "Electronics & Telecom"],
+    degrees: ["B.E.", "B.Tech"],
+  },
+  {
+    id: "inst_2",
+    name: "Deccan College of Science & Commerce",
+    code: "DCS002",
+    city: "Nagpur",
+    tnpHead: "Prof. Sameer Wankhede",
+    tnpEmail: "placements@deccancollege.ac.in",
+    departments: ["Computer Science", "Commerce & Analytics"],
+    degrees: ["B.Sc.", "BCA", "B.Com"],
+  },
+];
 
-export const FACULTY: Faculty[] = [
+/** Kept for backwards compatibility with the single-institution version. */
+export const COLLEGE = INSTITUTIONS[0]!;
+
+export const TNP_USERS: TnpUser[] = [
+  {
+    id: "tnp_1",
+    institutionId: "inst_1",
+    name: "Dr. Meena Rathore",
+    email: "tnp@sit.edu.in",
+    designation: "Head — Training & Placement Cell",
+    accessCode: "SIT-TNP-2026",
+  },
+  {
+    id: "tnp_2",
+    institutionId: "inst_2",
+    name: "Prof. Sameer Wankhede",
+    email: "placements@deccancollege.ac.in",
+    designation: "Placement Officer",
+    accessCode: "DCS-TNP-2026",
+  },
+];
+
+type SeedFaculty = Omit<Faculty, "institutionId" | "accessCode">;
+
+const RAW_FACULTY: SeedFaculty[] = [
   { id: "fac_1", name: "Prof. Anand Deshmukh", email: "anand.d@sit.edu.in", department: "Computer Engineering", designation: "Associate Professor · Internship Coordinator", assignedYears: [3, 4] },
   { id: "fac_2", name: "Dr. Kavita Iyer", email: "kavita.i@sit.edu.in", department: "Information Technology", designation: "Professor · Internship Coordinator", assignedYears: [3, 4] },
   { id: "fac_3", name: "Prof. Rajeev Nair", email: "rajeev.n@sit.edu.in", department: "Electronics & Telecom", designation: "Assistant Professor", assignedYears: [3, 4] },
 ];
 
-export const COMPANIES: Company[] = [
+export const FACULTY: Faculty[] = [
+  ...RAW_FACULTY.map((f, i) => ({
+    ...f,
+    institutionId: "inst_1",
+    accessCode: `SIT-FAC-${i + 1}`,
+  })),
+  {
+    id: "fac_9", name: "Dr. Shalini Bhatt", email: "shalini.b@deccancollege.ac.in",
+    institutionId: "inst_2", department: "Computer Science",
+    designation: "Associate Professor · Internship Coordinator", assignedYears: [2, 3],
+    accessCode: "DCS-FAC-1",
+  },
+];
+
+type SeedCompany = Omit<Company, "accessCode">;
+
+const RAW_COMPANIES: SeedCompany[] = [
   {
     id: "com_1", name: "Nexawave Analytics", website: "https://nexawave.io", industry: "Data & Analytics",
     hqLocation: "Pune, Maharashtra", size: "180-250 employees",
