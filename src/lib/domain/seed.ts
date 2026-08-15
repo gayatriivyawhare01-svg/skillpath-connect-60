@@ -5,10 +5,12 @@ import type {
   EvidenceItem,
   Faculty,
   HistoryEntry,
+  Institution,
   Internship,
   Notification,
   Opportunity,
   Student,
+  TnpUser,
 } from "./types";
 
 const TODAY = new Date();
@@ -26,21 +28,76 @@ function h(days: number, actor: HistoryEntry["actor"], actorName: string, event:
   return note ? { at: stamp(days), actor, actorName, event, note } : { at: stamp(days), actor, actorName, event };
 }
 
-export const COLLEGE = {
-  id: "col_1",
-  name: "Sardar Institute of Technology",
-  city: "Pune",
-  tnpHead: "Dr. Meena Rathore",
-  tnpEmail: "tnp@sit.edu.in",
-};
+export const INSTITUTIONS: Institution[] = [
+  {
+    id: "inst_1",
+    name: "Sardar Institute of Technology",
+    code: "SIT001",
+    city: "Pune",
+    tnpHead: "Dr. Meena Rathore",
+    tnpEmail: "tnp@sit.edu.in",
+    departments: ["Computer Engineering", "Information Technology", "Electronics & Telecom"],
+    degrees: ["B.E.", "B.Tech"],
+  },
+  {
+    id: "inst_2",
+    name: "Deccan College of Science & Commerce",
+    code: "DCS002",
+    city: "Nagpur",
+    tnpHead: "Prof. Sameer Wankhede",
+    tnpEmail: "placements@deccancollege.ac.in",
+    departments: ["Computer Science", "Commerce & Analytics"],
+    degrees: ["B.Sc.", "BCA", "B.Com"],
+  },
+];
 
-export const FACULTY: Faculty[] = [
+/** Kept for backwards compatibility with the single-institution version. */
+export const COLLEGE = INSTITUTIONS[0]!;
+
+export const TNP_USERS: TnpUser[] = [
+  {
+    id: "tnp_1",
+    institutionId: "inst_1",
+    name: "Dr. Meena Rathore",
+    email: "tnp@sit.edu.in",
+    designation: "Head — Training & Placement Cell",
+    accessCode: "SIT-TNP-2026",
+  },
+  {
+    id: "tnp_2",
+    institutionId: "inst_2",
+    name: "Prof. Sameer Wankhede",
+    email: "placements@deccancollege.ac.in",
+    designation: "Placement Officer",
+    accessCode: "DCS-TNP-2026",
+  },
+];
+
+type SeedFaculty = Omit<Faculty, "institutionId" | "accessCode">;
+
+const RAW_FACULTY: SeedFaculty[] = [
   { id: "fac_1", name: "Prof. Anand Deshmukh", email: "anand.d@sit.edu.in", department: "Computer Engineering", designation: "Associate Professor · Internship Coordinator", assignedYears: [3, 4] },
   { id: "fac_2", name: "Dr. Kavita Iyer", email: "kavita.i@sit.edu.in", department: "Information Technology", designation: "Professor · Internship Coordinator", assignedYears: [3, 4] },
   { id: "fac_3", name: "Prof. Rajeev Nair", email: "rajeev.n@sit.edu.in", department: "Electronics & Telecom", designation: "Assistant Professor", assignedYears: [3, 4] },
 ];
 
-export const COMPANIES: Company[] = [
+export const FACULTY: Faculty[] = [
+  ...RAW_FACULTY.map((f, i) => ({
+    ...f,
+    institutionId: "inst_1",
+    accessCode: `SIT-FAC-${i + 1}`,
+  })),
+  {
+    id: "fac_9", name: "Dr. Shalini Bhatt", email: "shalini.b@deccancollege.ac.in",
+    institutionId: "inst_2", department: "Computer Science",
+    designation: "Associate Professor · Internship Coordinator", assignedYears: [2, 3],
+    accessCode: "DCS-FAC-1",
+  },
+];
+
+type SeedCompany = Omit<Company, "accessCode">;
+
+const RAW_COMPANIES: SeedCompany[] = [
   {
     id: "com_1", name: "Nexawave Analytics", website: "https://nexawave.io", industry: "Data & Analytics",
     hqLocation: "Pune, Maharashtra", size: "180-250 employees",
@@ -71,7 +128,15 @@ export const COMPANIES: Company[] = [
   },
 ];
 
-type SeedStudent = Omit<Student, "collegeId">;
+export const COMPANIES: Company[] = RAW_COMPANIES.map((c, i) => ({
+  ...c,
+  accessCode: `COMPANY-${i + 1}`,
+}));
+
+type SeedStudent = Omit<
+  Student,
+  "collegeId" | "institutionId" | "degree" | "semester" | "graduationYear"
+>;
 
 const RAW_STUDENTS: SeedStudent[] = [
   {
@@ -267,7 +332,65 @@ const RAW_STUDENTS: SeedStudent[] = [
   },
 ];
 
-export const STUDENTS: Student[] = RAW_STUDENTS.map((s) => ({ ...s, collegeId: COLLEGE.id }));
+/** Deccan College students — used to prove institution isolation in the demo. */
+const RAW_STUDENTS_INST2: SeedStudent[] = [
+  {
+    id: "stu_21", name: "Fatima Sheikh", email: "fatima.s@deccancollege.ac.in", rollNo: "BCA23-011", phone: "+91 90280 11223",
+    department: "Computer Science", year: 3, cgpa: 8.1, city: "Nagpur",
+    skills: ["Python", "SQL", "Excel", "Power BI"],
+    softSkills: ["Communication"],
+    projects: [{ title: "Retail Billing Analytics", description: "SQL reporting layer and Power BI dashboard for a family retail business.", skills: ["SQL", "Power BI"] }],
+    certifications: ["Google Data Analytics"],
+    interests: ["Analytics"], preferredRoles: ["Data Analyst"], preferredDomain: "Data & Analytics",
+    preferredLocation: "Nagpur", preferredModes: ["Onsite", "Hybrid"],
+    availableFrom: offset(-8), availableMonths: 6, previousInternships: 0,
+    resumeSummary: "BCA student with practical reporting and dashboarding work.",
+    facultyId: "fac_9", assessmentComplete: true, assessmentUpdatedAt: stamp(-12), readinessIndex: 70,
+  },
+  {
+    id: "stu_22", name: "Omkar Deshmukh", email: "omkar.d@deccancollege.ac.in", rollNo: "BSC22-004", phone: "+91 89750 66412",
+    department: "Computer Science", year: 2, cgpa: 7.4, city: "Nagpur",
+    skills: ["JavaScript", "HTML", "CSS", "React"],
+    softSkills: ["Teamwork"],
+    projects: [{ title: "College Event Portal", description: "React front end for departmental event registrations.", skills: ["React"] }],
+    certifications: [],
+    interests: ["Web development"], preferredRoles: ["Frontend Developer"], preferredDomain: "Product Engineering",
+    preferredLocation: "Remote", preferredModes: ["Remote"],
+    availableFrom: offset(20), availableMonths: 4, previousInternships: 0,
+    resumeSummary: "Second-year student building front-end fundamentals.",
+    facultyId: "fac_9", assessmentComplete: false,
+  },
+  {
+    id: "stu_23", name: "Ritika Bansal", email: "ritika.b@deccancollege.ac.in", rollNo: "BCOM22-058", phone: "+91 91450 77120",
+    department: "Commerce & Analytics", year: 3, cgpa: 8.8, city: "Nagpur",
+    skills: ["Excel", "SQL", "Statistics", "Tableau"],
+    softSkills: ["Presentation", "Analytical thinking"],
+    projects: [{ title: "GST Filing Trends", description: "Analysed two years of filing data for a chartered accountancy firm.", skills: ["Excel", "SQL"] }],
+    certifications: ["Tableau Desktop Specialist"],
+    interests: ["Business analytics"], preferredRoles: ["Business Analyst", "Data Analyst"], preferredDomain: "Data & Analytics",
+    preferredLocation: "Pune", preferredModes: ["Hybrid", "Remote"],
+    availableFrom: offset(-3), availableMonths: 6, previousInternships: 1,
+    resumeSummary: "Commerce student with strong spreadsheet modelling and BI exposure.",
+    facultyId: "fac_9", assessmentComplete: true, assessmentUpdatedAt: stamp(-5), readinessIndex: 73,
+  },
+];
+
+function withInstitution(list: SeedStudent[], institutionId: string): Student[] {
+  const inst = INSTITUTIONS.find((i) => i.id === institutionId)!;
+  return list.map((s) => ({
+    ...s,
+    collegeId: institutionId,
+    institutionId,
+    degree: inst.degrees[0] ?? "B.E.",
+    semester: s.year * 2 - 1,
+    graduationYear: new Date().getFullYear() + Math.max(0, 4 - s.year),
+  }));
+}
+
+export const STUDENTS: Student[] = [
+  ...withInstitution(RAW_STUDENTS, "inst_1"),
+  ...withInstitution(RAW_STUDENTS_INST2, "inst_2"),
+];
 
 export const OPPORTUNITIES: Opportunity[] = [
   {

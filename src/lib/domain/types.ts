@@ -110,8 +110,12 @@ export type Student = {
   rollNo: string;
   phone: string;
   collegeId: string;
+  institutionId: string;
   department: string;
+  degree: string;
   year: number;
+  semester: number;
+  graduationYear: number;
   cgpa: number;
   city: string;
   skills: string[];
@@ -154,23 +158,43 @@ export type Company = {
   contactPhone: string;
   approval: CompanyApproval;
   registeredAt: string;
+  /** Demo stand-in for a company recruiter account password. */
+  accessCode: string;
 };
 
 export type Faculty = {
   id: string;
   name: string;
   email: string;
+  institutionId: string;
   department: string;
   designation: string;
   assignedYears: number[];
+  /** Demo stand-in for institutional SSO. Real deployments swap this for IdP login. */
+  accessCode: string;
 };
 
-export type College = {
+export type Institution = {
   id: string;
   name: string;
+  code: string;
   city: string;
   tnpHead: string;
   tnpEmail: string;
+  departments: string[];
+  degrees: string[];
+};
+
+/** Kept as an alias so existing `db.college` references stay valid. */
+export type College = Institution;
+
+export type TnpUser = {
+  id: string;
+  institutionId: string;
+  name: string;
+  email: string;
+  designation: string;
+  accessCode: string;
 };
 
 export const OPPORTUNITY_STATES = [
@@ -186,6 +210,8 @@ export type Opportunity = {
   id: string;
   companyId: string;
   pathway: "college-placed";
+  /** Institutions this posting is released to. Multi-tenancy boundary. */
+  institutionIds: string[];
   role: string;
   domain: string;
   location: string;
@@ -392,6 +418,7 @@ export type Notification = {
   id: string;
   audience: Role;
   audienceId: string;
+  institutionId?: string;
   kind: NotificationKind;
   title: string;
   body: string;
@@ -403,14 +430,19 @@ export type Notification = {
 
 export type Session = {
   role: Role | null;
+  signedIn: boolean;
+  institutionId: string;
   studentId: string;
   facultyId: string;
   companyId: string;
+  tnpUserId: string;
 };
 
 export type DB = {
   version: number;
   session: Session;
+  institutions: Institution[];
+  tnpUsers: TnpUser[];
   college: College;
   students: Student[];
   companies: Company[];
