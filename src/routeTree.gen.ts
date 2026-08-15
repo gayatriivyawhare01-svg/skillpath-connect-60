@@ -11,15 +11,41 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CareerAuditRouteImport } from './routes/career-audit'
+import { Route as CompanyRouteImport } from './routes/company'
+import { Route as FacultyRouteImport } from './routes/faculty'
 import { Route as InternshipPassportRouteImport } from './routes/internship-passport'
 import { Route as InternshipXrayRouteImport } from './routes/internship-xray'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ResumeIntelligenceRouteImport } from './routes/resume-intelligence'
+import { Route as StudentRouteImport } from './routes/student'
+import { Route as TnpRouteImport } from './routes/tnp'
+import { Route as CompanyIndexRouteImport } from './routes/company.index'
+import { Route as CompanyCandidatesRouteImport } from './routes/company.candidates'
+import { Route as CompanyInternsRouteImport } from './routes/company.interns'
+import { Route as CompanyPostRouteImport } from './routes/company.post'
+import { Route as CompanyProfileRouteImport } from './routes/company.profile'
+import { Route as FacultyIndexRouteImport } from './routes/faculty.index'
+import { Route as FacultyEvaluationsRouteImport } from './routes/faculty.evaluations'
+import { Route as FacultyPermissionsRouteImport } from './routes/faculty.permissions'
+import { Route as FacultyStudentsRouteImport } from './routes/faculty.students'
+import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as StudentCareerAuditRouteImport } from './routes/student.career-audit'
+import { Route as StudentNotificationsRouteImport } from './routes/student.notifications'
+import { Route as StudentOpportunitiesRouteImport } from './routes/student.opportunities'
 import { Route as StudentPassportRouteImport } from './routes/student.passport'
 import { Route as StudentProfileRouteImport } from './routes/student.profile'
 import { Route as StudentResumeRouteImport } from './routes/student.resume'
+import { Route as StudentSelfPlacedRouteImport } from './routes/student.self-placed'
 import { Route as StudentXrayRouteImport } from './routes/student.xray'
+import { Route as TnpIndexRouteImport } from './routes/tnp.index'
+import { Route as TnpActionsRouteImport } from './routes/tnp.actions'
+import { Route as TnpCompaniesRouteImport } from './routes/tnp.companies'
+import { Route as TnpInternshipsRouteImport } from './routes/tnp.internships'
+import { Route as TnpMonitoringRouteImport } from './routes/tnp.monitoring'
+import { Route as TnpOffersRouteImport } from './routes/tnp.offers'
+import { Route as TnpReportsRouteImport } from './routes/tnp.reports'
+import { Route as TnpStudentsRouteImport } from './routes/tnp.students'
+import { Route as TnpVerificationRouteImport } from './routes/tnp.verification'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +55,16 @@ const IndexRoute = IndexRouteImport.update({
 const CareerAuditRoute = CareerAuditRouteImport.update({
   id: '/career-audit',
   path: '/career-audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompanyRoute = CompanyRouteImport.update({
+  id: '/company',
+  path: '/company',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FacultyRoute = FacultyRouteImport.update({
+  id: '/faculty',
+  path: '/faculty',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InternshipPassportRoute = InternshipPassportRouteImport.update({
@@ -51,44 +87,190 @@ const ResumeIntelligenceRoute = ResumeIntelligenceRouteImport.update({
   path: '/resume-intelligence',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StudentCareerAuditRoute = StudentCareerAuditRouteImport.update({
-  id: '/student/career-audit',
-  path: '/student/career-audit',
+const StudentRoute = StudentRouteImport.update({
+  id: '/student',
+  path: '/student',
   getParentRoute: () => rootRouteImport,
+} as any)
+const TnpRoute = TnpRouteImport.update({
+  id: '/tnp',
+  path: '/tnp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompanyIndexRoute = CompanyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CompanyRoute,
+} as any)
+const CompanyCandidatesRoute = CompanyCandidatesRouteImport.update({
+  id: '/candidates',
+  path: '/candidates',
+  getParentRoute: () => CompanyRoute,
+} as any)
+const CompanyInternsRoute = CompanyInternsRouteImport.update({
+  id: '/interns',
+  path: '/interns',
+  getParentRoute: () => CompanyRoute,
+} as any)
+const CompanyPostRoute = CompanyPostRouteImport.update({
+  id: '/post',
+  path: '/post',
+  getParentRoute: () => CompanyRoute,
+} as any)
+const CompanyProfileRoute = CompanyProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => CompanyRoute,
+} as any)
+const FacultyIndexRoute = FacultyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyEvaluationsRoute = FacultyEvaluationsRouteImport.update({
+  id: '/evaluations',
+  path: '/evaluations',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyPermissionsRoute = FacultyPermissionsRouteImport.update({
+  id: '/permissions',
+  path: '/permissions',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyStudentsRoute = FacultyStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const StudentIndexRoute = StudentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentCareerAuditRoute = StudentCareerAuditRouteImport.update({
+  id: '/career-audit',
+  path: '/career-audit',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentNotificationsRoute = StudentNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentOpportunitiesRoute = StudentOpportunitiesRouteImport.update({
+  id: '/opportunities',
+  path: '/opportunities',
+  getParentRoute: () => StudentRoute,
 } as any)
 const StudentPassportRoute = StudentPassportRouteImport.update({
-  id: '/student/passport',
-  path: '/student/passport',
-  getParentRoute: () => rootRouteImport,
+  id: '/passport',
+  path: '/passport',
+  getParentRoute: () => StudentRoute,
 } as any)
 const StudentProfileRoute = StudentProfileRouteImport.update({
-  id: '/student/profile',
-  path: '/student/profile',
-  getParentRoute: () => rootRouteImport,
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => StudentRoute,
 } as any)
 const StudentResumeRoute = StudentResumeRouteImport.update({
-  id: '/student/resume',
-  path: '/student/resume',
-  getParentRoute: () => rootRouteImport,
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentSelfPlacedRoute = StudentSelfPlacedRouteImport.update({
+  id: '/self-placed',
+  path: '/self-placed',
+  getParentRoute: () => StudentRoute,
 } as any)
 const StudentXrayRoute = StudentXrayRouteImport.update({
-  id: '/student/xray',
-  path: '/student/xray',
-  getParentRoute: () => rootRouteImport,
+  id: '/xray',
+  path: '/xray',
+  getParentRoute: () => StudentRoute,
+} as any)
+const TnpIndexRoute = TnpIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpActionsRoute = TnpActionsRouteImport.update({
+  id: '/actions',
+  path: '/actions',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpCompaniesRoute = TnpCompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpInternshipsRoute = TnpInternshipsRouteImport.update({
+  id: '/internships',
+  path: '/internships',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpMonitoringRoute = TnpMonitoringRouteImport.update({
+  id: '/monitoring',
+  path: '/monitoring',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpOffersRoute = TnpOffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpReportsRoute = TnpReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpStudentsRoute = TnpStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => TnpRoute,
+} as any)
+const TnpVerificationRoute = TnpVerificationRouteImport.update({
+  id: '/verification',
+  path: '/verification',
+  getParentRoute: () => TnpRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/career-audit': typeof CareerAuditRoute
+  '/company': typeof CompanyRouteWithChildren
+  '/faculty': typeof FacultyRouteWithChildren
   '/internship-passport': typeof InternshipPassportRoute
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
+  '/student': typeof StudentRouteWithChildren
+  '/tnp': typeof TnpRouteWithChildren
+  '/company/candidates': typeof CompanyCandidatesRoute
+  '/company/interns': typeof CompanyInternsRoute
+  '/company/post': typeof CompanyPostRoute
+  '/company/profile': typeof CompanyProfileRoute
+  '/faculty/evaluations': typeof FacultyEvaluationsRoute
+  '/faculty/permissions': typeof FacultyPermissionsRoute
+  '/faculty/students': typeof FacultyStudentsRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
+  '/student/notifications': typeof StudentNotificationsRoute
+  '/student/opportunities': typeof StudentOpportunitiesRoute
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
+  '/student/self-placed': typeof StudentSelfPlacedRoute
   '/student/xray': typeof StudentXrayRoute
+  '/tnp/actions': typeof TnpActionsRoute
+  '/tnp/companies': typeof TnpCompaniesRoute
+  '/tnp/internships': typeof TnpInternshipsRoute
+  '/tnp/monitoring': typeof TnpMonitoringRoute
+  '/tnp/offers': typeof TnpOffersRoute
+  '/tnp/reports': typeof TnpReportsRoute
+  '/tnp/students': typeof TnpStudentsRoute
+  '/tnp/verification': typeof TnpVerificationRoute
+  '/company/': typeof CompanyIndexRoute
+  '/faculty/': typeof FacultyIndexRoute
+  '/student/': typeof StudentIndexRoute
+  '/tnp/': typeof TnpIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -97,40 +279,114 @@ export interface FileRoutesByTo {
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
+  '/company/candidates': typeof CompanyCandidatesRoute
+  '/company/interns': typeof CompanyInternsRoute
+  '/company/post': typeof CompanyPostRoute
+  '/company/profile': typeof CompanyProfileRoute
+  '/faculty/evaluations': typeof FacultyEvaluationsRoute
+  '/faculty/permissions': typeof FacultyPermissionsRoute
+  '/faculty/students': typeof FacultyStudentsRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
+  '/student/notifications': typeof StudentNotificationsRoute
+  '/student/opportunities': typeof StudentOpportunitiesRoute
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
+  '/student/self-placed': typeof StudentSelfPlacedRoute
   '/student/xray': typeof StudentXrayRoute
+  '/tnp/actions': typeof TnpActionsRoute
+  '/tnp/companies': typeof TnpCompaniesRoute
+  '/tnp/internships': typeof TnpInternshipsRoute
+  '/tnp/monitoring': typeof TnpMonitoringRoute
+  '/tnp/offers': typeof TnpOffersRoute
+  '/tnp/reports': typeof TnpReportsRoute
+  '/tnp/students': typeof TnpStudentsRoute
+  '/tnp/verification': typeof TnpVerificationRoute
+  '/company': typeof CompanyIndexRoute
+  '/faculty': typeof FacultyIndexRoute
+  '/student': typeof StudentIndexRoute
+  '/tnp': typeof TnpIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/career-audit': typeof CareerAuditRoute
+  '/company': typeof CompanyRouteWithChildren
+  '/faculty': typeof FacultyRouteWithChildren
   '/internship-passport': typeof InternshipPassportRoute
   '/internship-xray': typeof InternshipXrayRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
+  '/student': typeof StudentRouteWithChildren
+  '/tnp': typeof TnpRouteWithChildren
+  '/company/candidates': typeof CompanyCandidatesRoute
+  '/company/interns': typeof CompanyInternsRoute
+  '/company/post': typeof CompanyPostRoute
+  '/company/profile': typeof CompanyProfileRoute
+  '/faculty/evaluations': typeof FacultyEvaluationsRoute
+  '/faculty/permissions': typeof FacultyPermissionsRoute
+  '/faculty/students': typeof FacultyStudentsRoute
   '/student/career-audit': typeof StudentCareerAuditRoute
+  '/student/notifications': typeof StudentNotificationsRoute
+  '/student/opportunities': typeof StudentOpportunitiesRoute
   '/student/passport': typeof StudentPassportRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resume': typeof StudentResumeRoute
+  '/student/self-placed': typeof StudentSelfPlacedRoute
   '/student/xray': typeof StudentXrayRoute
+  '/tnp/actions': typeof TnpActionsRoute
+  '/tnp/companies': typeof TnpCompaniesRoute
+  '/tnp/internships': typeof TnpInternshipsRoute
+  '/tnp/monitoring': typeof TnpMonitoringRoute
+  '/tnp/offers': typeof TnpOffersRoute
+  '/tnp/reports': typeof TnpReportsRoute
+  '/tnp/students': typeof TnpStudentsRoute
+  '/tnp/verification': typeof TnpVerificationRoute
+  '/company/': typeof CompanyIndexRoute
+  '/faculty/': typeof FacultyIndexRoute
+  '/student/': typeof StudentIndexRoute
+  '/tnp/': typeof TnpIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/career-audit'
+    | '/company'
+    | '/faculty'
     | '/internship-passport'
     | '/internship-xray'
     | '/profile'
     | '/resume-intelligence'
+    | '/student'
+    | '/tnp'
+    | '/company/candidates'
+    | '/company/interns'
+    | '/company/post'
+    | '/company/profile'
+    | '/faculty/evaluations'
+    | '/faculty/permissions'
+    | '/faculty/students'
     | '/student/career-audit'
+    | '/student/notifications'
+    | '/student/opportunities'
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
+    | '/student/self-placed'
     | '/student/xray'
+    | '/tnp/actions'
+    | '/tnp/companies'
+    | '/tnp/internships'
+    | '/tnp/monitoring'
+    | '/tnp/offers'
+    | '/tnp/reports'
+    | '/tnp/students'
+    | '/tnp/verification'
+    | '/company/'
+    | '/faculty/'
+    | '/student/'
+    | '/tnp/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -139,38 +395,85 @@ export interface FileRouteTypes {
     | '/internship-xray'
     | '/profile'
     | '/resume-intelligence'
+    | '/company/candidates'
+    | '/company/interns'
+    | '/company/post'
+    | '/company/profile'
+    | '/faculty/evaluations'
+    | '/faculty/permissions'
+    | '/faculty/students'
     | '/student/career-audit'
+    | '/student/notifications'
+    | '/student/opportunities'
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
+    | '/student/self-placed'
     | '/student/xray'
+    | '/tnp/actions'
+    | '/tnp/companies'
+    | '/tnp/internships'
+    | '/tnp/monitoring'
+    | '/tnp/offers'
+    | '/tnp/reports'
+    | '/tnp/students'
+    | '/tnp/verification'
+    | '/company'
+    | '/faculty'
+    | '/student'
+    | '/tnp'
   id:
     | '__root__'
     | '/'
     | '/career-audit'
+    | '/company'
+    | '/faculty'
     | '/internship-passport'
     | '/internship-xray'
     | '/profile'
     | '/resume-intelligence'
+    | '/student'
+    | '/tnp'
+    | '/company/candidates'
+    | '/company/interns'
+    | '/company/post'
+    | '/company/profile'
+    | '/faculty/evaluations'
+    | '/faculty/permissions'
+    | '/faculty/students'
     | '/student/career-audit'
+    | '/student/notifications'
+    | '/student/opportunities'
     | '/student/passport'
     | '/student/profile'
     | '/student/resume'
+    | '/student/self-placed'
     | '/student/xray'
+    | '/tnp/actions'
+    | '/tnp/companies'
+    | '/tnp/internships'
+    | '/tnp/monitoring'
+    | '/tnp/offers'
+    | '/tnp/reports'
+    | '/tnp/students'
+    | '/tnp/verification'
+    | '/company/'
+    | '/faculty/'
+    | '/student/'
+    | '/tnp/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CareerAuditRoute: typeof CareerAuditRoute
+  CompanyRoute: typeof CompanyRouteWithChildren
+  FacultyRoute: typeof FacultyRouteWithChildren
   InternshipPassportRoute: typeof InternshipPassportRoute
   InternshipXrayRoute: typeof InternshipXrayRoute
   ProfileRoute: typeof ProfileRoute
   ResumeIntelligenceRoute: typeof ResumeIntelligenceRoute
-  StudentCareerAuditRoute: typeof StudentCareerAuditRoute
-  StudentPassportRoute: typeof StudentPassportRoute
-  StudentProfileRoute: typeof StudentProfileRoute
-  StudentResumeRoute: typeof StudentResumeRoute
-  StudentXrayRoute: typeof StudentXrayRoute
+  StudentRoute: typeof StudentRouteWithChildren
+  TnpRoute: typeof TnpRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -187,6 +490,20 @@ declare module '@tanstack/react-router' {
       path: '/career-audit'
       fullPath: '/career-audit'
       preLoaderRoute: typeof CareerAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/company': {
+      id: '/company'
+      path: '/company'
+      fullPath: '/company'
+      preLoaderRoute: typeof CompanyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faculty': {
+      id: '/faculty'
+      path: '/faculty'
+      fullPath: '/faculty'
+      preLoaderRoute: typeof FacultyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/internship-passport': {
@@ -217,56 +534,312 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResumeIntelligenceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student': {
+      id: '/student'
+      path: '/student'
+      fullPath: '/student'
+      preLoaderRoute: typeof StudentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tnp': {
+      id: '/tnp'
+      path: '/tnp'
+      fullPath: '/tnp'
+      preLoaderRoute: typeof TnpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/company/': {
+      id: '/company/'
+      path: '/'
+      fullPath: '/company/'
+      preLoaderRoute: typeof CompanyIndexRouteImport
+      parentRoute: typeof CompanyRoute
+    }
+    '/company/candidates': {
+      id: '/company/candidates'
+      path: '/candidates'
+      fullPath: '/company/candidates'
+      preLoaderRoute: typeof CompanyCandidatesRouteImport
+      parentRoute: typeof CompanyRoute
+    }
+    '/company/interns': {
+      id: '/company/interns'
+      path: '/interns'
+      fullPath: '/company/interns'
+      preLoaderRoute: typeof CompanyInternsRouteImport
+      parentRoute: typeof CompanyRoute
+    }
+    '/company/post': {
+      id: '/company/post'
+      path: '/post'
+      fullPath: '/company/post'
+      preLoaderRoute: typeof CompanyPostRouteImport
+      parentRoute: typeof CompanyRoute
+    }
+    '/company/profile': {
+      id: '/company/profile'
+      path: '/profile'
+      fullPath: '/company/profile'
+      preLoaderRoute: typeof CompanyProfileRouteImport
+      parentRoute: typeof CompanyRoute
+    }
+    '/faculty/': {
+      id: '/faculty/'
+      path: '/'
+      fullPath: '/faculty/'
+      preLoaderRoute: typeof FacultyIndexRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/faculty/evaluations': {
+      id: '/faculty/evaluations'
+      path: '/evaluations'
+      fullPath: '/faculty/evaluations'
+      preLoaderRoute: typeof FacultyEvaluationsRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/faculty/permissions': {
+      id: '/faculty/permissions'
+      path: '/permissions'
+      fullPath: '/faculty/permissions'
+      preLoaderRoute: typeof FacultyPermissionsRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/faculty/students': {
+      id: '/faculty/students'
+      path: '/students'
+      fullPath: '/faculty/students'
+      preLoaderRoute: typeof FacultyStudentsRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/student/': {
+      id: '/student/'
+      path: '/'
+      fullPath: '/student/'
+      preLoaderRoute: typeof StudentIndexRouteImport
+      parentRoute: typeof StudentRoute
+    }
     '/student/career-audit': {
       id: '/student/career-audit'
-      path: '/student/career-audit'
+      path: '/career-audit'
       fullPath: '/student/career-audit'
       preLoaderRoute: typeof StudentCareerAuditRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/notifications': {
+      id: '/student/notifications'
+      path: '/notifications'
+      fullPath: '/student/notifications'
+      preLoaderRoute: typeof StudentNotificationsRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/opportunities': {
+      id: '/student/opportunities'
+      path: '/opportunities'
+      fullPath: '/student/opportunities'
+      preLoaderRoute: typeof StudentOpportunitiesRouteImport
+      parentRoute: typeof StudentRoute
     }
     '/student/passport': {
       id: '/student/passport'
-      path: '/student/passport'
+      path: '/passport'
       fullPath: '/student/passport'
       preLoaderRoute: typeof StudentPassportRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof StudentRoute
     }
     '/student/profile': {
       id: '/student/profile'
-      path: '/student/profile'
+      path: '/profile'
       fullPath: '/student/profile'
       preLoaderRoute: typeof StudentProfileRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof StudentRoute
     }
     '/student/resume': {
       id: '/student/resume'
-      path: '/student/resume'
+      path: '/resume'
       fullPath: '/student/resume'
       preLoaderRoute: typeof StudentResumeRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/self-placed': {
+      id: '/student/self-placed'
+      path: '/self-placed'
+      fullPath: '/student/self-placed'
+      preLoaderRoute: typeof StudentSelfPlacedRouteImport
+      parentRoute: typeof StudentRoute
     }
     '/student/xray': {
       id: '/student/xray'
-      path: '/student/xray'
+      path: '/xray'
       fullPath: '/student/xray'
       preLoaderRoute: typeof StudentXrayRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/tnp/': {
+      id: '/tnp/'
+      path: '/'
+      fullPath: '/tnp/'
+      preLoaderRoute: typeof TnpIndexRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/actions': {
+      id: '/tnp/actions'
+      path: '/actions'
+      fullPath: '/tnp/actions'
+      preLoaderRoute: typeof TnpActionsRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/companies': {
+      id: '/tnp/companies'
+      path: '/companies'
+      fullPath: '/tnp/companies'
+      preLoaderRoute: typeof TnpCompaniesRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/internships': {
+      id: '/tnp/internships'
+      path: '/internships'
+      fullPath: '/tnp/internships'
+      preLoaderRoute: typeof TnpInternshipsRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/monitoring': {
+      id: '/tnp/monitoring'
+      path: '/monitoring'
+      fullPath: '/tnp/monitoring'
+      preLoaderRoute: typeof TnpMonitoringRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/offers': {
+      id: '/tnp/offers'
+      path: '/offers'
+      fullPath: '/tnp/offers'
+      preLoaderRoute: typeof TnpOffersRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/reports': {
+      id: '/tnp/reports'
+      path: '/reports'
+      fullPath: '/tnp/reports'
+      preLoaderRoute: typeof TnpReportsRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/students': {
+      id: '/tnp/students'
+      path: '/students'
+      fullPath: '/tnp/students'
+      preLoaderRoute: typeof TnpStudentsRouteImport
+      parentRoute: typeof TnpRoute
+    }
+    '/tnp/verification': {
+      id: '/tnp/verification'
+      path: '/verification'
+      fullPath: '/tnp/verification'
+      preLoaderRoute: typeof TnpVerificationRouteImport
+      parentRoute: typeof TnpRoute
     }
   }
 }
 
+interface CompanyRouteChildren {
+  CompanyCandidatesRoute: typeof CompanyCandidatesRoute
+  CompanyInternsRoute: typeof CompanyInternsRoute
+  CompanyPostRoute: typeof CompanyPostRoute
+  CompanyProfileRoute: typeof CompanyProfileRoute
+  CompanyIndexRoute: typeof CompanyIndexRoute
+}
+
+const CompanyRouteChildren: CompanyRouteChildren = {
+  CompanyCandidatesRoute: CompanyCandidatesRoute,
+  CompanyInternsRoute: CompanyInternsRoute,
+  CompanyPostRoute: CompanyPostRoute,
+  CompanyProfileRoute: CompanyProfileRoute,
+  CompanyIndexRoute: CompanyIndexRoute,
+}
+
+const CompanyRouteWithChildren =
+  CompanyRoute._addFileChildren(CompanyRouteChildren)
+
+interface FacultyRouteChildren {
+  FacultyEvaluationsRoute: typeof FacultyEvaluationsRoute
+  FacultyPermissionsRoute: typeof FacultyPermissionsRoute
+  FacultyStudentsRoute: typeof FacultyStudentsRoute
+  FacultyIndexRoute: typeof FacultyIndexRoute
+}
+
+const FacultyRouteChildren: FacultyRouteChildren = {
+  FacultyEvaluationsRoute: FacultyEvaluationsRoute,
+  FacultyPermissionsRoute: FacultyPermissionsRoute,
+  FacultyStudentsRoute: FacultyStudentsRoute,
+  FacultyIndexRoute: FacultyIndexRoute,
+}
+
+const FacultyRouteWithChildren =
+  FacultyRoute._addFileChildren(FacultyRouteChildren)
+
+interface StudentRouteChildren {
+  StudentCareerAuditRoute: typeof StudentCareerAuditRoute
+  StudentNotificationsRoute: typeof StudentNotificationsRoute
+  StudentOpportunitiesRoute: typeof StudentOpportunitiesRoute
+  StudentPassportRoute: typeof StudentPassportRoute
+  StudentProfileRoute: typeof StudentProfileRoute
+  StudentResumeRoute: typeof StudentResumeRoute
+  StudentSelfPlacedRoute: typeof StudentSelfPlacedRoute
+  StudentXrayRoute: typeof StudentXrayRoute
+  StudentIndexRoute: typeof StudentIndexRoute
+}
+
+const StudentRouteChildren: StudentRouteChildren = {
+  StudentCareerAuditRoute: StudentCareerAuditRoute,
+  StudentNotificationsRoute: StudentNotificationsRoute,
+  StudentOpportunitiesRoute: StudentOpportunitiesRoute,
+  StudentPassportRoute: StudentPassportRoute,
+  StudentProfileRoute: StudentProfileRoute,
+  StudentResumeRoute: StudentResumeRoute,
+  StudentSelfPlacedRoute: StudentSelfPlacedRoute,
+  StudentXrayRoute: StudentXrayRoute,
+  StudentIndexRoute: StudentIndexRoute,
+}
+
+const StudentRouteWithChildren =
+  StudentRoute._addFileChildren(StudentRouteChildren)
+
+interface TnpRouteChildren {
+  TnpActionsRoute: typeof TnpActionsRoute
+  TnpCompaniesRoute: typeof TnpCompaniesRoute
+  TnpInternshipsRoute: typeof TnpInternshipsRoute
+  TnpMonitoringRoute: typeof TnpMonitoringRoute
+  TnpOffersRoute: typeof TnpOffersRoute
+  TnpReportsRoute: typeof TnpReportsRoute
+  TnpStudentsRoute: typeof TnpStudentsRoute
+  TnpVerificationRoute: typeof TnpVerificationRoute
+  TnpIndexRoute: typeof TnpIndexRoute
+}
+
+const TnpRouteChildren: TnpRouteChildren = {
+  TnpActionsRoute: TnpActionsRoute,
+  TnpCompaniesRoute: TnpCompaniesRoute,
+  TnpInternshipsRoute: TnpInternshipsRoute,
+  TnpMonitoringRoute: TnpMonitoringRoute,
+  TnpOffersRoute: TnpOffersRoute,
+  TnpReportsRoute: TnpReportsRoute,
+  TnpStudentsRoute: TnpStudentsRoute,
+  TnpVerificationRoute: TnpVerificationRoute,
+  TnpIndexRoute: TnpIndexRoute,
+}
+
+const TnpRouteWithChildren = TnpRoute._addFileChildren(TnpRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CareerAuditRoute: CareerAuditRoute,
+  CompanyRoute: CompanyRouteWithChildren,
+  FacultyRoute: FacultyRouteWithChildren,
   InternshipPassportRoute: InternshipPassportRoute,
   InternshipXrayRoute: InternshipXrayRoute,
   ProfileRoute: ProfileRoute,
   ResumeIntelligenceRoute: ResumeIntelligenceRoute,
-  StudentCareerAuditRoute: StudentCareerAuditRoute,
-  StudentPassportRoute: StudentPassportRoute,
-  StudentProfileRoute: StudentProfileRoute,
-  StudentResumeRoute: StudentResumeRoute,
-  StudentXrayRoute: StudentXrayRoute,
+  StudentRoute: StudentRouteWithChildren,
+  TnpRoute: TnpRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

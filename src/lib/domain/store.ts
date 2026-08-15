@@ -669,7 +669,7 @@ export const actions = {
           id: newId("evd"),
           type: "Offer letter",
           title: offer.fileName ?? "Offer letter",
-          fileName: offer.fileName,
+          ...(offer.fileName ? { fileName: offer.fileName } : {}),
           submittedBy: byTnp ? "tnp" : "student",
           submittedByName: byTnp ? db.college.tnpHead : (studentById(db, i.studentId)?.name ?? "Student"),
           submittedAt: new Date().toISOString(),
