@@ -7,7 +7,7 @@ import { ROLE_LABEL, type Role } from "@/lib/domain/types";
 import { Pill } from "@/components/report-ui";
 
 export type NavItem = {
-  to: LinkProps["to"];
+  to: NonNullable<LinkProps["to"]>;
   label: string;
   icon: ComponentType<{ className?: string }>;
   exact?: boolean;
