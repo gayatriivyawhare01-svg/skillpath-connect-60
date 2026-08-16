@@ -1,3 +1,7 @@
+import {
+  saveCloudState,
+  loadCloudState,
+} from "../firebase/s2i-cloud";
 import { useSyncExternalStore } from "react";
 import { buildSeed } from "./seed";
 import {
@@ -53,6 +57,29 @@ function serverSnapshot(): DB {
   return SEED;
 }
 
+export async function hydrateFromFirebase() {
+  if (typeof window === "undefined") return;
+
+  const cloudState = await loadCloudState();
+
+  if (!cloudState) {
+    return;
+  }
+
+  cache = cloudState;
+
+  try {
+    window.localStorage.setItem(
+      KEY,
+      JSON.stringify(cloudState),
+    );
+  } catch {
+    /* ignore localStorage failure */
+  }
+
+  listeners.forEach((listener) => listener());
+}
+
 function subscribe(cb: () => void) {
   listeners.add(cb);
   return () => listeners.delete(cb);
@@ -60,16 +87,19 @@ function subscribe(cb: () => void) {
 
 function commit(next: DB) {
   cache = next;
+
   if (typeof window !== "undefined") {
     try {
       window.localStorage.setItem(KEY, JSON.stringify(next));
     } catch {
-      /* quota exceeded — state stays in memory for this session */
+      /* ignore localStorage failure */
     }
+
+    void saveCloudState(next);
   }
+
   listeners.forEach((l) => l());
 }
-
 export function mutate(fn: (db: DB) => DB) {
   commit(fn(structuredClone(snapshot())));
 }

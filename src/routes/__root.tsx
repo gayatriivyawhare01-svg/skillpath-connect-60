@@ -8,7 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
-
+import { hydrateFromFirebase } from "../lib/domain/store";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { TopNav, SiteFooter } from "@/components/app-shell";
@@ -115,6 +115,9 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
+  useEffect(() => {
+  void hydrateFromFirebase();
+}, []);
   const { queryClient } = Route.useRouteContext();
 
   return (

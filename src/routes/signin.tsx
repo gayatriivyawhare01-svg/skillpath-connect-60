@@ -77,7 +77,7 @@ function SignIn() {
     setRollNo("");
   }
 
-  function submit() {
+  async function submit() {
     let result: SignInResult;
     if (role === "student") result = signInStudent(db, institutionId, rollNo);
     else if (role === "tnp") result = signInTnp(db, institutionId, code);
