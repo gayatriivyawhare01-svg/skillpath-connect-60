@@ -76,6 +76,7 @@ function PostOpportunity() {
     }
     actions.postOpportunity({
       companyId,
+      institutionIds: db.institutions.map((i) => i.id),
       role: f.role,
       domain: f.domain,
       location: f.location,
