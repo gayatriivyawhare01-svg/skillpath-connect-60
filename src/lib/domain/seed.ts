@@ -394,7 +394,7 @@ export const STUDENTS: Student[] = [
 
 export const OPPORTUNITIES: Opportunity[] = [
   {
-    id: "opp_1", companyId: "com_1", pathway: "college-placed",
+    id: "opp_1", institutionIds: ["inst_1", "inst_2"], companyId: "com_1", pathway: "college-placed",
     role: "Data Analyst", domain: "Data & Analytics", location: "Pune, Maharashtra", workMode: "Hybrid",
     durationMonths: 6, stipend: 25000, openings: 3,
     description: "Work with the client analytics pod on retail reporting: build SQL models, maintain Power BI dashboards and support monthly forecasting reviews.",
@@ -410,7 +410,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     ],
   },
   {
-    id: "opp_2", companyId: "com_2", pathway: "college-placed",
+    id: "opp_2", institutionIds: ["inst_1"], companyId: "com_2", pathway: "college-placed",
     role: "Full Stack Developer", domain: "Product Engineering", location: "Bengaluru, Karnataka", workMode: "Remote",
     durationMonths: 6, stipend: 30000, openings: 2,
     description: "Ship features on a logistics dashboard built with React, TypeScript and Node. You will own small end-to-end slices with code review from senior engineers.",
@@ -418,14 +418,14 @@ export const OPPORTUNITIES: Opportunity[] = [
     requiredSkills: ["JavaScript", "React", "Node.js", "Git"],
     preferredSkills: ["TypeScript", "PostgreSQL", "Docker"],
     minCgpa: 7, departments: ["Computer Engineering", "Information Technology"], years: [3, 4],
-    startDate: offset(14), deadline: offset(3), status: "Live", createdAt: stamp(-20),
+    startDate: offset(14), deadline: offset(3), status: "Submitted to T&P", createdAt: stamp(-20),
     history: [
       h(-20, "company", "Torqbit Systems", "Opportunity posted"),
       h(-19, "tnp", "Dr. Meena Rathore", "Approved for circulation"),
     ],
   },
   {
-    id: "opp_3", companyId: "com_3", pathway: "college-placed",
+    id: "opp_3", institutionIds: ["inst_1"], companyId: "com_3", pathway: "college-placed",
     role: "ML Engineer", domain: "Health Technology", location: "Hyderabad, Telangana", workMode: "Hybrid",
     durationMonths: 6, stipend: 35000, openings: 1,
     description: "Support the clinical NLP team: dataset preparation, baseline models and evaluation harnesses for discharge summary tooling. CGPA above 8 expected.",
@@ -440,7 +440,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     ],
   },
   {
-    id: "opp_4", companyId: "com_2", pathway: "college-placed",
+    id: "opp_4", institutionIds: ["inst_1"], companyId: "com_2", pathway: "college-placed",
     role: "Backend Developer", domain: "Product Engineering", location: "Bengaluru, Karnataka", workMode: "Hybrid",
     durationMonths: 5, stipend: 28000, openings: 2,
     description: "Own service endpoints for the partner integrations platform. Java or Node background accepted.",
@@ -452,7 +452,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     history: [h(-6, "company", "Torqbit Systems", "Opportunity posted"), h(-5, "tnp", "Dr. Meena Rathore", "Approved for circulation")],
   },
   {
-    id: "opp_5", companyId: "com_4", pathway: "college-placed",
+    id: "opp_5", institutionIds: ["inst_1"], companyId: "com_4", pathway: "college-placed",
     role: "Embedded Engineer", domain: "Clean Energy", location: "Pune, Maharashtra", workMode: "Onsite",
     durationMonths: 6, stipend: 18000, openings: 2,
     description: "Firmware and telemetry work on rooftop solar monitoring units. Onsite at the Hinjewadi lab.",
@@ -634,8 +634,18 @@ export const NOTIFICATIONS: Notification[] = [
 
 export function buildSeed(): DB {
   return {
-    version: 1,
-    session: { role: null, studentId: "stu_1", facultyId: "fac_1", companyId: "com_1" },
+    version: 2,
+    session: {
+      role: null,
+      signedIn: false,
+      institutionId: "inst_1",
+      studentId: "stu_1",
+      facultyId: "fac_1",
+      companyId: "com_1",
+      tnpUserId: "tnp_1",
+    },
+    institutions: INSTITUTIONS,
+    tnpUsers: TNP_USERS,
     college: COLLEGE,
     students: STUDENTS,
     companies: COMPANIES,
