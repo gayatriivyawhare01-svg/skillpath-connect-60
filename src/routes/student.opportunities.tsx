@@ -41,7 +41,7 @@ function StudentOpportunities() {
   if (!student) return null;
 
   const live = db.opportunities
-    .filter((o) => o.status === "Live" || o.status === "T&P Approved")
+    .filter((o) => o.status === "Live")
     .filter((o) =>
       `${o.role} ${o.domain} ${o.location}`.toLowerCase().includes(query.trim().toLowerCase()),
     );

@@ -58,9 +58,9 @@ export function signInStudent(
   );
 
   if (matches.length === 0) {
-    return fail(
-      "Student record not found. Please check your institution and roll number.",
-    );
+    // Deliberately generic: never reveal whether the institution or the
+    // roll number was the part that didn't match.
+    return fail("Invalid institution code or roll number.");
   }
 
   if (matches.length > 1) {

@@ -1,4 +1,5 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import {
   Bell,
   BrainCircuit,
@@ -10,9 +11,9 @@ import {
   Sparkles,
   UserRound,
 } from "lucide-react";
-import { IdentityPicker, RoleShell } from "@/components/s2i/role-shell";
+import { RoleShell } from "@/components/s2i/role-shell";
 import { RoleGate } from "@/components/s2i/role-gate";
-import { actions, useDB } from "@/lib/domain/store";
+import { studentById, useDB } from "@/lib/domain/store";
 import type { NavItem } from "@/components/s2i/role-shell";
 
 export const Route = createFileRoute("/student")({
@@ -33,22 +34,42 @@ const NAV: NavItem[] = [
 
 function StudentLayout() {
   const db = useDB();
+  const navigate = useNavigate();
+  const session = db.session;
+
+  // A student may only enter this workspace with a session that (a) was
+  // produced by a successful sign-in as "student" and (b) still resolves to
+  // a real student record inside the institution recorded at sign-in time.
+  // There is no dropdown or URL/session field a person can edit to become a
+  // different student — the identity below is read-only, and if the lookup
+  // ever fails (missing session, tampered/unknown studentId, institution
+  // mismatch) we bounce straight back to sign-in instead of rendering
+  // anything from the student workspace.
+  const student = session.studentId ? studentById(db, session.studentId) : undefined;
+  const authorized =
+    session.signedIn &&
+    session.role === "student" &&
+    !!student &&
+    student.institutionId === session.institutionId;
+
+  useEffect(() => {
+    if (!authorized) {
+      navigate({ to: "/signin", search: { role: "student" } });
+    }
+  }, [authorized, navigate]);
+
+  if (!authorized || !student) return null;
+
   return (
     <RoleGate role="student">
       <RoleShell
         role="student"
         nav={NAV}
         identity={
-          <IdentityPicker
-            label="Signed in as"
-            value={db.session.studentId}
-            onChange={(studentId) => actions.setIdentity({ studentId })}
-            options={db.students.map((s) => ({
-              value: s.id,
-              label: `${s.name} · ${s.rollNo}`,
-            }))}
-            note="Demo: switch student to see different pipeline states."
-          />
+          <div className="rounded-lg border border-border bg-secondary/30 px-3 py-2">
+            <p className="text-[13px] font-medium text-foreground">{student.name}</p>
+            <p className="text-[11px] text-muted-foreground">Roll {student.rollNo}</p>
+          </div>
         }
       >
         <Outlet />
