@@ -15,6 +15,7 @@ import { Route as CompanyRouteImport } from './routes/company'
 import { Route as FacultyRouteImport } from './routes/faculty'
 import { Route as InternshipPassportRouteImport } from './routes/internship-passport'
 import { Route as InternshipXrayRouteImport } from './routes/internship-xray'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ResumeIntelligenceRouteImport } from './routes/resume-intelligence'
 import { Route as SigninRouteImport } from './routes/signin'
@@ -76,6 +77,11 @@ const InternshipPassportRoute = InternshipPassportRouteImport.update({
 const InternshipXrayRoute = InternshipXrayRouteImport.update({
   id: '/internship-xray',
   path: '/internship-xray',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -246,6 +252,7 @@ export interface FileRoutesByFullPath {
   '/faculty': typeof FacultyRouteWithChildren
   '/internship-passport': typeof InternshipPassportRoute
   '/internship-xray': typeof InternshipXrayRoute
+  '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
   '/signin': typeof SigninRoute
@@ -284,6 +291,7 @@ export interface FileRoutesByTo {
   '/career-audit': typeof CareerAuditRoute
   '/internship-passport': typeof InternshipPassportRoute
   '/internship-xray': typeof InternshipXrayRoute
+  '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
   '/signin': typeof SigninRoute
@@ -323,6 +331,7 @@ export interface FileRoutesById {
   '/faculty': typeof FacultyRouteWithChildren
   '/internship-passport': typeof InternshipPassportRoute
   '/internship-xray': typeof InternshipXrayRoute
+  '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/resume-intelligence': typeof ResumeIntelligenceRoute
   '/signin': typeof SigninRoute
@@ -365,6 +374,7 @@ export interface FileRouteTypes {
     | '/faculty'
     | '/internship-passport'
     | '/internship-xray'
+    | '/pricing'
     | '/profile'
     | '/resume-intelligence'
     | '/signin'
@@ -403,6 +413,7 @@ export interface FileRouteTypes {
     | '/career-audit'
     | '/internship-passport'
     | '/internship-xray'
+    | '/pricing'
     | '/profile'
     | '/resume-intelligence'
     | '/signin'
@@ -441,6 +452,7 @@ export interface FileRouteTypes {
     | '/faculty'
     | '/internship-passport'
     | '/internship-xray'
+    | '/pricing'
     | '/profile'
     | '/resume-intelligence'
     | '/signin'
@@ -482,6 +494,7 @@ export interface RootRouteChildren {
   FacultyRoute: typeof FacultyRouteWithChildren
   InternshipPassportRoute: typeof InternshipPassportRoute
   InternshipXrayRoute: typeof InternshipXrayRoute
+  PricingRoute: typeof PricingRoute
   ProfileRoute: typeof ProfileRoute
   ResumeIntelligenceRoute: typeof ResumeIntelligenceRoute
   SigninRoute: typeof SigninRoute
@@ -531,6 +544,13 @@ declare module '@tanstack/react-router' {
       path: '/internship-xray'
       fullPath: '/internship-xray'
       preLoaderRoute: typeof InternshipXrayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -856,6 +876,7 @@ const rootRouteChildren: RootRouteChildren = {
   FacultyRoute: FacultyRouteWithChildren,
   InternshipPassportRoute: InternshipPassportRoute,
   InternshipXrayRoute: InternshipXrayRoute,
+  PricingRoute: PricingRoute,
   ProfileRoute: ProfileRoute,
   ResumeIntelligenceRoute: ResumeIntelligenceRoute,
   SigninRoute: SigninRoute,
