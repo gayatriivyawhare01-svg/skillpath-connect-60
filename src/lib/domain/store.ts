@@ -28,7 +28,7 @@ import {
   type VerificationState,
 } from "./types";
 
-const KEY = "s2i.db.v2";
+const KEY = "s2i.db.v3";
 
 const SEED = buildSeed();
 let cache: DB | null = null;
