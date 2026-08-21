@@ -213,11 +213,12 @@ function ev(
  */
 export const APPLICATIONS: Application[] = [
   {
-    id: "app_1", opportunityId: "opp_1", studentId: "stu_1", stage: "Application", matchScore: 88,
-    source: "Student applied", tnpApproved: false, createdAt: stamp(-1),
+    id: "app_1", opportunityId: "opp_1", studentId: "stu_1", status: "APPLIED", stage: "Application", matchScore: 88,
+    source: "Student applied", tnpApproved: false, documents: [], createdAt: stamp(-1),
     history: [h(-1, "student", "Aarav Kulkarni", "Applied — awaiting T&P review")],
   },
 ];
+
 
 /** The single self-placed internship, sitting in the T&P verification queue. */
 export const INTERNSHIPS: Internship[] = [

@@ -233,14 +233,216 @@ export type Opportunity = {
   history: HistoryEntry[];
 };
 
+/* ------------------------------------------------------------------
+ * College-placed application lifecycle.
+ * One controlled status machine. Nothing jumps: every move is an
+ * explicit action by the role allowed to make it.
+ * ------------------------------------------------------------------ */
+
+export const APPLICATION_STATUSES = [
+  "APPLIED",
+  "SHORTLISTED",
+  "SELECTED",
+  "CONSENT_REQUIRED",
+  "CONSENT_SUBMITTED",
+  "CONSENT_REJECTED",
+  "CONSENT_VERIFIED",
+  "OFFER_RELEASED",
+  "FACULTY_ASSIGNED",
+  "ONGOING",
+  "COMPLETED",
+  "REJECTED",
+  "WITHDRAWN",
+] as const;
+export type ApplicationStatus = (typeof APPLICATION_STATUSES)[number];
+
+/** The happy path, in order. Used for progress rendering. */
+export const APPLICATION_FLOW: ApplicationStatus[] = [
+  "APPLIED",
+  "SHORTLISTED",
+  "SELECTED",
+  "CONSENT_REQUIRED",
+  "CONSENT_SUBMITTED",
+  "CONSENT_VERIFIED",
+  "OFFER_RELEASED",
+  "FACULTY_ASSIGNED",
+  "ONGOING",
+  "COMPLETED",
+];
+
+export const APPLICATION_STATUS_LABEL: Record<ApplicationStatus, string> = {
+  APPLIED: "Applied",
+  SHORTLISTED: "Shortlisted",
+  SELECTED: "Selected — T&P action required",
+  CONSENT_REQUIRED: "Consent letter required",
+  CONSENT_SUBMITTED: "Consent submitted — awaiting T&P verification",
+  CONSENT_REJECTED: "Consent rejected — re-upload required",
+  CONSENT_VERIFIED: "Consent verified",
+  OFFER_RELEASED: "Offer letter released",
+  FACULTY_ASSIGNED: "Faculty coordinator assigned",
+  ONGOING: "Internship ongoing",
+  COMPLETED: "Internship completed",
+  REJECTED: "Not selected",
+  WITHDRAWN: "Withdrawn",
+};
+
+/** Which role is permitted to move an application INTO a given status. */
+export const STATUS_ACTOR: Record<ApplicationStatus, Role[]> = {
+  APPLIED: ["student"],
+  SHORTLISTED: ["tnp", "company"],
+  SELECTED: ["company", "tnp"],
+  CONSENT_REQUIRED: ["tnp"],
+  CONSENT_SUBMITTED: ["student"],
+  CONSENT_REJECTED: ["tnp"],
+  CONSENT_VERIFIED: ["tnp"],
+  OFFER_RELEASED: ["tnp"],
+  FACULTY_ASSIGNED: ["tnp"],
+  ONGOING: ["tnp", "company", "student"],
+  COMPLETED: ["tnp", "faculty"],
+  REJECTED: ["company", "tnp"],
+  WITHDRAWN: ["student"],
+};
+
+const ALLOWED_TRANSITIONS: Record<ApplicationStatus, ApplicationStatus[]> = {
+  APPLIED: ["SHORTLISTED", "REJECTED", "WITHDRAWN"],
+  SHORTLISTED: ["SELECTED", "REJECTED", "WITHDRAWN"],
+  SELECTED: ["CONSENT_REQUIRED", "REJECTED", "WITHDRAWN"],
+  CONSENT_REQUIRED: ["CONSENT_SUBMITTED", "WITHDRAWN"],
+  CONSENT_SUBMITTED: ["CONSENT_VERIFIED", "CONSENT_REJECTED"],
+  CONSENT_REJECTED: ["CONSENT_REQUIRED", "CONSENT_SUBMITTED", "WITHDRAWN"],
+  CONSENT_VERIFIED: ["OFFER_RELEASED"],
+  OFFER_RELEASED: ["FACULTY_ASSIGNED"],
+  FACULTY_ASSIGNED: ["ONGOING"],
+  ONGOING: ["COMPLETED"],
+  COMPLETED: [],
+  REJECTED: [],
+  WITHDRAWN: [],
+};
+
+export function canTransition(from: ApplicationStatus, to: ApplicationStatus) {
+  return ALLOWED_TRANSITIONS[from]?.includes(to) ?? false;
+}
+
+export function allowedNext(from: ApplicationStatus) {
+  return ALLOWED_TRANSITIONS[from] ?? [];
+}
+
+export function canActorSet(role: Role, to: ApplicationStatus) {
+  return STATUS_ACTOR[to].includes(role);
+}
+
+export function applicationProgress(status: ApplicationStatus) {
+  const i = APPLICATION_FLOW.indexOf(status);
+  if (i < 0) return 0;
+  return Math.round(((i + 1) / APPLICATION_FLOW.length) * 100);
+}
+
+/** Status → internship lifecycle stage, so both views stay in step. */
+export const STATUS_STAGE: Record<ApplicationStatus, Stage> = {
+  APPLIED: "Application",
+  SHORTLISTED: "Shortlisted",
+  SELECTED: "Selected",
+  CONSENT_REQUIRED: "Selected",
+  CONSENT_SUBMITTED: "Consent Submitted",
+  CONSENT_REJECTED: "Selected",
+  CONSENT_VERIFIED: "Consent Submitted",
+  OFFER_RELEASED: "Offer Letter",
+  FACULTY_ASSIGNED: "Joining",
+  ONGOING: "Active",
+  COMPLETED: "Completion",
+  REJECTED: "Application",
+  WITHDRAWN: "Application",
+};
+
+/** Workflow documents live against the application, never as loose files. */
+export const WORKFLOW_DOCUMENT_TYPES = ["CONSENT_LETTER", "OFFER_LETTER"] as const;
+export type WorkflowDocumentType = (typeof WORKFLOW_DOCUMENT_TYPES)[number];
+
+export const WORKFLOW_DOCUMENT_LABEL: Record<WorkflowDocumentType, string> = {
+  CONSENT_LETTER: "Consent letter",
+  OFFER_LETTER: "Offer letter",
+};
+
+export type WorkflowDocumentStatus = "Required" | "Submitted" | "Verified" | "Rejected";
+
+export type WorkflowDocument = {
+  id: string;
+  documentType: WorkflowDocumentType;
+  studentId: string;
+  applicationId: string;
+  opportunityId: string;
+  internshipId?: string;
+  fileName: string;
+  note?: string;
+  status: WorkflowDocumentStatus;
+  uploadedAt?: string;
+  uploadedBy?: Role;
+  uploadedByName?: string;
+  verifiedAt?: string;
+  verifiedBy?: string;
+  rejectionReason?: string;
+};
+
+export type ConsentRequest = {
+  id: string;
+  studentId: string;
+  applicationId: string;
+  opportunityId: string;
+  requestedBy: string;
+  requestedByName: string;
+  requestedAt: string;
+  message: string;
+  status: "Pending" | "Submitted" | "Verified" | "Rejected";
+  verifiedBy?: string;
+  verifiedAt?: string;
+  rejectionReason?: string;
+};
+
+export type OfferRelease = {
+  id: string;
+  studentId: string;
+  applicationId: string;
+  opportunityId: string;
+  companyId: string;
+  role: string;
+  startDate: string;
+  endDate: string;
+  stipend: number;
+  reportingLocation: string;
+  workMode: WorkMode;
+  fileName?: string;
+  status: "Released";
+  releasedBy: string;
+  releasedByName: string;
+  releasedAt: string;
+};
+
+export type FacultyAssignment = {
+  id: string;
+  facultyId: string;
+  facultyName: string;
+  studentId: string;
+  applicationId: string;
+  internshipId?: string;
+  assignedBy: string;
+  assignedByName: string;
+  assignedAt: string;
+};
+
 export type Application = {
   id: string;
   opportunityId: string;
   studentId: string;
+  /** Controlled lifecycle status — the spine of the college-placed workflow. */
+  status: ApplicationStatus;
   stage: Stage;
   matchScore: number;
   source: "T&P shortlist" | "Student applied";
   tnpApproved: boolean;
+  documents: WorkflowDocument[];
+  consentRequest?: ConsentRequest;
+  offerRelease?: OfferRelease;
+  facultyAssignment?: FacultyAssignment;
   interview?: {
     scheduledFor: string;
     mode: WorkMode;
@@ -251,6 +453,7 @@ export type Application = {
   createdAt: string;
   history: HistoryEntry[];
 };
+
 
 export const EVIDENCE_TYPES = [
   "Offer letter",
