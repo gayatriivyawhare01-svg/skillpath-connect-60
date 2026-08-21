@@ -312,16 +312,19 @@ export const actions = {
       if (existing) {
         existing.tnpApproved = true;
         if (stageIndex(existing.stage) < stageIndex("Shortlisted")) existing.stage = "Shortlisted";
+        if (canTransition(appStatus(existing), "SHORTLISTED")) existing.status = "SHORTLISTED";
         existing.history.push(entry("tnp", db.college.tnpHead, "Approved and shortlisted"));
       } else {
         db.applications.unshift({
           id: newId("app"),
           opportunityId: oppId,
           studentId,
+          status: "SHORTLISTED",
           stage: "Shortlisted",
           matchScore,
           source: "T&P shortlist",
           tnpApproved: true,
+          documents: [],
           createdAt: new Date().toISOString(),
           history: [
             entry(
@@ -362,10 +365,12 @@ export const actions = {
         id: newId("app"),
         opportunityId: oppId,
         studentId,
+        status: "APPLIED",
         stage: "Application",
         matchScore,
         source: "Student applied",
         tnpApproved: false,
+        documents: [],
         createdAt: new Date().toISOString(),
         history: [entry("student", s.name, "Applied — awaiting T&P review")],
       });
@@ -379,6 +384,7 @@ export const actions = {
       return db;
     });
   },
+
   advanceApplication(
     appId: string,
     stage: Stage,
